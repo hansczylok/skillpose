@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% from "_macros.html" import bar, coverage, tier_badge, tier_help, stability_box %}
+{% block title %}{{ name }} – {{ t("nav.market") }} – {{ t("app.name") }}{% endblock %}
+{% block content %}
+<h1>{{ name }}</h1>
+{% if not cv.analyzed %}
+<p class="empty">{{ t("matches.no_profile") }} <a href="/cv/{{ cv_id }}/text">{{ t("profile.to_analysis") }}</a></p>
+{% elif not families %}
+<p class="empty">{{ t("matches.none") }} <a href="/postings">{{ t("matches.to_postings") }}</a></p>
+{% else %}
+<p class="meta">{{ t("market.intro") }}</p>
+{{ tier_help(t, tier_rules) }}
+{{ stability_box(stability) }}
+{% for f in families %}
+<section class="family" id="family-{{ f.family }}">
+  <h2>
+    {{ f.label }}
+    {{ tier_badge(t, f.tier) }}
+  </h2>
+  <p class="meta">{{ t("count.postings", count=f.postings) }}</p>
+  <p>{{ t("market.coverage") }}: <span class="cov">{{ coverage(f.coverage) }}</span></p>
+  <h3>{{ t("market.gaps_title") }}</h3>
+  {% if f.gaps %}
+  <ul class="gaps">
+    {% for g in f.gaps %}
+    <li class="gap">
+      <strong>{{ g.name }}</strong>
+      {{ bar(g.width) }}
+      <span class="meta">
+        {%- if g.gap_type %}{{ t("market.gap_type") }}: {{ t("gap." ~ g.gap_type) }} · {% endif -%}
+        {{ t("market.in_postings", count=g.postings) -}}
+      </span>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="empty">{{ t("market.no_gaps") }}</p>
+  {% endif %}
+  {% if f.blocked %}
+  <h3>{{ t("market.blocked_title") }}</h3>
+  <p class="meta">{{ t("market.blocked_hint") }} <a href="/cv/{{ cv_id }}#conditions">{{ t("matches.change_answers") if has_key else t("matches.see_answers") }}</a></p>
+  <ul class="gaps">
+    {% for b in f.blocked %}
+    <li class="blocked">
+      <strong>{{ b.name }}</strong>
+      <span class="meta">{{ t("market.in_postings", count=b.postings) }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</section>
+{% endfor %}
+<p class="hint">{{ t("market.legend_bars") }}</p>
+{% endif %}
+{% endblock %}

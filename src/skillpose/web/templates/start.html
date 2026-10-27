@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% from "_macros.html" import notice_box %}
+{# One of the four steps; in the demo it links to that page of the first demo person. #}
+{% macro step(label, href) -%}
+<li>{% if href %}<a href="{{ href }}">{{ label }}</a>{% else %}<span>{{ label }}</span>{% endif %}</li>
+{%- endmacro %}
+{% block content %}
+{% set first = cvs[0] if demo and cvs else none %}
+{% set base = "/cv/" ~ first.id if first else none %}
+{% set locked = not has_key %}
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-text">
+    <h1 id="hero-title"><span>{{ t("hero.where") }}</span> <span>{{ t("hero.whither") }}</span></h1>
+    <p class="lead">{{ t("hero.lead") }}</p>
+    <div class="hero-actions">
+      {% if first %}
+      <a class="button button-brand" href="{{ base }}">{{ t("hero.demo") }}</a>
+      {% endif %}
+      {# with a key the own data are all there is: the upload is the first step #}
+      {% if has_key %}
+      <a class="button button-brand" href="#upload">{{ t("hero.own") }}</a>
+      {% else %}
+      <button type="button" class="button secondary" disabled aria-describedby="own-hint">{{ t("hero.own") }}</button>
+      {% endif %}
+    </div>
+    {% if not has_key %}
+    <p class="hint own-hint" id="own-hint">{{ t("hero.own_hint") }} (<a href="{{ start_guide_url }}">{{ t("hero.own_guide") }}</a>)</p>
+    {% endif %}
+  </div>
+  <img class="hero-logo" src="/static/logo.svg" alt="{{ t("logo.alt") }}" width="240" height="110">
+</section>
+
+{% if not has_key and not demo_available %}
+<p class="hint">{{ t("demo.missing") }}</p>
+{% endif %}
+
+{% if demo %}
+<section aria-labelledby="demo-title">
+  <h2 id="demo-title">{{ t("start.demo_persons") }}</h2>
+  <p class="hint">{{ t("demo.hint") }}</p>
+  <ul class="persons">
+    {% for cv in cvs %}
+    <li class="person">
+      <a href="/cv/{{ cv.id }}">{{ person_label(cv.name) }}</a>
+      {% if cv_languages[cv.id] == "de" %}
+      <span class="meta">{{ t("start.cv_de") }}</span>
+      {% elif cv_languages[cv.id] == "en" %}
+      <span class="meta">{{ t("start.cv_en") }}</span>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% else %}
+<section aria-labelledby="cvs-title">
+  <h2 id="cvs-title">{{ t("start.cvs") }}</h2>
+  {{ notice_box(notice, ("deleted",)) }}
+  {% if cvs %}
+  <ul class="list">
+    {% for cv in cvs %}
+    <li id="cv-{{ cv.id }}">
+      <a href="/cv/{{ cv.id }}">{{ cv.name }}</a>
+      <span class="meta">{{ t("start.created", time=fmt_time(cv.created)) }}</span>
+      {% if cv.analyzed %}
+      <span class="mark ok">{{ t("start.analyzed") }}</span>
+      {% else %}
+      <span class="mark muted">{{ t("start.not_analyzed") }}</span>
+      {% endif %}
+      {% if not locked %}
+      {# two steps without script, as at the bottom of the CV pages: open the details, then confirm #}
+      {% set busy_here = notice and notice.key == "delete_busy" and notice_cv == cv.id %}
+      <details class="delete"{% if busy_here %} open{% endif %}>
+        <summary>{{ t("delete.short") }}<span class="visually-hidden"> {{ cv.name }}</span></summary>
+        <form class="card" method="post" action="/cv/{{ cv.id }}/delete" data-busy="{{ t("delete.deleting") }}">
+          <input type="hidden" name="back" value="start">
+          <p>{{ t("delete.warning") }}</p>
+          {% if busy_here %}{{ notice_box(notice, ("delete_busy",)) }}{% endif %}
+          <button type="submit" class="danger">{{ t("delete.button") }}</button>
+        </form>
+      </details>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="empty">{{ t("start.none") }}</p>
+  {% endif %}
+</section>
+{% endif %}
+
+<ol class="flow">
+  {{ step(t("steps.profile"), base) }}
+  {{ step(t("steps.matches"), base and base ~ "/matches") }}
+  {{ step(t("steps.market"), base and base ~ "/market") }}
+  {{ step(t("steps.paths"), base and base ~ "/paths") }}
+</ol>
+
+<section id="upload" aria-labelledby="upload-title">
+  <h2 id="upload-title">{{ t("start.upload") }}</h2>
+  <form class="card" method="post" action="/cv" enctype="multipart/form-data" data-busy="{{ t("start.uploading") }}">
+    <label for="cv-file">{{ t("start.file") }}</label>
+    <input id="cv-file" type="file" name="file" accept=".pdf,.docx,.txt,.md" required{% if locked %} disabled{% endif %}>
+    {% if upload_error %}
+    <p class="msg error" role="alert">{{ upload_error }}</p>
+    {% endif %}
+    <button type="submit"{% if locked %} disabled{% endif %}>{{ t("start.upload_button") }}</button>
+    {% if not has_key %}
+    <p class="hint">{{ t("start.no_key") }}</p>
+    {% endif %}
+  </form>
+</section>
+{% endblock %}

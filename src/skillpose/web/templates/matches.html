@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% from "_macros.html" import coverage, pager, tier_badge, tier_help %}
+{% block title %}{{ name }} – {{ t("nav.matches") }} – {{ t("app.name") }}{% endblock %}
+{% block content %}
+<h1>{{ name }}</h1>
+{% if not cv.analyzed %}
+<p class="empty">{{ t("matches.no_profile") }} <a href="/cv/{{ cv_id }}/text">{{ t("profile.to_analysis") }}</a></p>
+{% elif not rows %}
+<p class="empty">{{ t("matches.none") }} <a href="/postings">{{ t("matches.to_postings") }}</a></p>
+{% else %}
+<p class="meta">{{ t("matches.intro") }}</p>
+{{ tier_help(t, tier_rules) }}
+{{ pager(t, page, "matches") }}
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">{{ t("matches.col_title") }}</th>
+        <th scope="col">{{ t("matches.col_role") }}</th>
+        <th scope="col">{{ t("matches.col_tier") }}</th>
+        <th scope="col">{{ t("matches.col_must") }}</th>
+        <th scope="col">{{ t("matches.col_nice") }}</th>
+        <th scope="col">{{ t("matches.col_gaps") }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+      <tr id="posting-{{ row.hash }}">
+        <td><a href="/cv/{{ cv_id }}/matches/{{ row.hash }}">{{ row.title }}</a></td>
+        <td>{{ row.role }}</td>
+        <td>{{ tier_badge(t, row.tier) }}</td>
+        <td class="cov cov-must">{{ coverage(row.must) }}</td>
+        <td class="cov cov-nice">{{ coverage(row.nice) }}</td>
+        <td>{% if row.gaps %}{{ row.gaps|join(", ") }}{% else %}–{% endif %}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{{ pager(t, page, "matches", bottom=true) }}
+{% if rows|selectattr("translated")|first %}
+<p class="hint">{{ t("posting.translated_note") }}</p>
+{% endif %}
+<p class="hint">{{ t("matches.dash_hint") }}</p>
+{% endif %}
+{% endblock %}

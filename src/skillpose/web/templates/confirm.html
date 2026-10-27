@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{{ t("confirm.title") }} – {{ t("app.name") }}{% endblock %}
+{% block content %}
+<h1>{{ t("confirm.title") }}</h1>
+<form class="card" method="post" action="{{ action }}" data-busy="{{ busy }}">
+  {% if note %}
+  <p class="msg error" role="alert">{{ note }}</p>
+  {% endif %}
+  <p>{{ question }}</p>
+  <input type="hidden" name="confirm" value="1">
+  {% for name, value in (fields or {}).items() %}
+  <input type="hidden" name="{{ name }}" value="{{ value }}">
+  {% endfor %}
+  <button type="submit">{{ t("confirm.accept", cost=usd(cost)) }}</button>
+  <a href="{{ back }}">{{ t("confirm.cancel") }}</a>
+</form>
+{% endblock %}

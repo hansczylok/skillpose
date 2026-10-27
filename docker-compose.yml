@@ -1,0 +1,17 @@
+# docker-compose.yml
+services:
+  skillpose:
+    build: .
+    image: skillpose:local
+    env_file:
+      - path: .env
+        required: false
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - skillpose-data:/data
+      # your own prompts (see README, "Prompts"): mount the folder read-only and set SKILLPOSE_PROMPTS=/prompts in .env
+      # - ./my-prompts:/prompts:ro
+    restart: unless-stopped
+volumes:
+  skillpose-data:

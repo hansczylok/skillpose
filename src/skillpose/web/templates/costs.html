@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% block title %}{{ t("nav.costs") }} – {{ t("app.name") }}{% endblock %}
+{% block content %}
+<h1>{{ t("nav.costs") }}</h1>
+{% if prompt_set %}
+<p class="hint">{{ t("costs.prompt_set", label=prompt_set) }}</p>
+{% endif %}
+
+{% if month %}
+<section aria-labelledby="month-title">
+  <h2 id="month-title">{{ t("costs.month_title") }}</h2>
+  <dl class="facts">
+    <dt>{{ t("costs.spent") }}</dt>
+    <dd>{{ usd(month.spent) }} USD</dd>
+    <dt>{{ t("costs.limit") }}</dt>
+    <dd>{{ usd(month.limit) }} USD</dd>
+    <dt>{{ t("costs.rest") }}</dt>
+    <dd>{{ usd(month.rest) }} USD</dd>
+    <dt>{{ t("costs.cache") }}</dt>
+    <dd>{{ month.cache_share }} %</dd>
+  </dl>
+</section>
+{% endif %}
+
+{% if demo %}
+<section aria-labelledby="demo-title">
+  <h2 id="demo-title">{{ t("costs.demo_title") }}</h2>
+  <p class="hint">{{ t("costs.demo_hint") }}</p>
+  <p><strong>{{ t("costs.demo_total", usd=usd(build_total)) }}</strong></p>
+</section>
+{% endif %}
+
+<section aria-labelledby="steps-title">
+  <h2 id="steps-title">{{ t("costs.steps_all") if demo else t("costs.steps_month") }}</h2>
+  {% if steps %}
+  <div class="table-wrap">
+    <table class="steps-costs">
+      <thead>
+        <tr>
+          <th scope="col">{{ t("costs.col_step") }}</th>
+          <th scope="col" class="num">{{ t("costs.col_calls") }}</th>
+          <th scope="col" class="num">{{ t("costs.col_usd") }}</th>
+          <th scope="col" class="num">{{ t("costs.col_cache") }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in steps %}
+        <tr>
+          <td>{{ row.label }}</td>
+          <td class="num">{{ row.calls }}</td>
+          <td class="num">{{ row.usd }}</td>
+          <td class="num">{{ row.cache_share }} %</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="empty">{{ t("costs.no_calls") if demo else t("costs.no_calls_month") }}</p>
+  {% endif %}
+</section>
+
+<section aria-labelledby="means-title">
+  <h2 id="means-title">{{ t("costs.means_title_demo") if demo else t("costs.means_title") }}</h2>
+  {% if means %}
+  <div class="table-wrap">
+    <table class="means">
+      <thead>
+        <tr>
+          <th scope="col">{{ t("costs.col_step") }}</th>
+          <th scope="col">{{ t("costs.col_mode") }}</th>
+          <th scope="col" class="num">{{ t("costs.col_calls") }}</th>
+          <th scope="col" class="num">{{ t("costs.col_mean") }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in means %}
+        <tr>
+          <td>{{ row.label }}</td>
+          <td>{{ t("costs.mode_batch") if row.batch else t("costs.mode_single") }}</td>
+          <td class="num">{{ row.calls }}</td>
+          <td class="num">{{ row.mean }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <p class="hint">{{ t("costs.means_note_demo") if demo else t("costs.means_note") }}</p>
+  {% else %}
+  <p class="empty">{{ t("costs.no_calls") }}</p>
+  {% endif %}
+</section>
+
+<section aria-labelledby="calls-title">
+  <h2 id="calls-title">{{ t("costs.calls_title", count=recent) }}</h2>
+  {% if calls %}
+  <div class="table-wrap">
+    <table class="calls">
+      <thead>
+        <tr>
+          <th scope="col">{{ t("costs.col_time") }}</th>
+          <th scope="col">{{ t("costs.col_step") }}</th>
+          <th scope="col">{{ t("costs.col_model") }}</th>
+          <th scope="col" class="num">{{ t("costs.col_in") }}</th>
+          <th scope="col" class="num">{{ t("costs.col_out") }}</th>
+          <th scope="col" class="num">{{ t("costs.col_write") }}</th>
+          <th scope="col" class="num">{{ t("costs.col_read") }}</th>
+          <th scope="col" class="num">{{ t("costs.col_usd") }}</th>
+          <th scope="col">{{ t("costs.col_batch") }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in calls %}
+        <tr>
+          <td>{{ fmt_time(row.time) }}</td>
+          <td>{{ row.step }}</td>
+          <td>{{ row.model }}</td>
+          <td class="num">{{ row.input }}</td>
+          <td class="num">{{ row.output }}</td>
+          <td class="num">{{ row.cache_write }}</td>
+          <td class="num">{{ row.cache_read }}</td>
+          <td class="num">{{ row.usd }}</td>
+          <td>{{ t("costs.batch_yes") if row.batch else t("costs.batch_no") }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="empty">{{ t("costs.no_calls") }}</p>
+  {% endif %}
+</section>
+{% endblock %}

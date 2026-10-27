@@ -1,0 +1,348 @@
+# Expected results of the skillpose gold set. Keys are file names without extension.
+# cvs: language of the CV, skills that must be extracted, traps that must not, expected best evidence strength for
+# unambiguous cases, the expected status of single requirements (match_status) and the tier per role family with at
+# least 5 postings (role_tiers; the default minimum is 1 posting since 2026-10-24, so the market view now has more
+# families than these 12 tiers, which were fixed when the minimum was 5).
+# postings: role family, seniority, must and nice requirements (skill ids or names that resolve in the vocabulary).
+# conditions: invented answers to the conditions of postings (driving licence, travel, ...) for the demo. The demo is
+# one database, so its persons share one set, as every database has one. Only `skillpose demo build` uses them; the
+# eval matches with every condition unanswered, so they change no expected value here.
+#
+# match_status and role_tiers follow from the rules of core/matching.py and core/market.py (defaults.yaml), applied for
+# the year 2026 to the expected skills (levels, years and evidence as the CV states them; the degree of the CV with an
+# id that starts with bachelor_, so it meets university_degree) and to the expected requirements (levels and years as
+# the posting states them). A gap with a distant relation counts 4 weeks (weeks), a gap without one 12 weeks
+# (months); tier 2 allows at most 26 weeks of must gaps. A role tier comment names the postings by their number.
+# Step 3b relations assumed (target <- skill of the person: relation); every pair not listed is none:
+#   airflow <- python: distant
+#   api_testing <- postman: close
+#   cpp <- java: close
+#   csharp <- cpp: close
+#   csharp <- java: close
+#   cypress <- power_automate: distant
+#   cypress <- selenium: close
+#   data_modeling <- sql: distant
+#   data_visualization <- excel: distant
+#   data_warehousing <- data_modeling: close
+#   data_warehousing <- sql: distant
+#   databricks <- python: distant
+#   databricks <- sql: distant
+#   dbt <- sql: close
+#   etl <- data_modeling: distant
+#   etl <- sql: distant
+#   github_actions <- docker: distant
+#   github_actions <- jenkins: close
+#   gitlab_ci <- docker: distant
+#   gitlab_ci <- jenkins: close
+#   java <- cpp: close
+#   java <- python: close
+#   jenkins <- docker: distant
+#   kafka <- python: distant
+#   kubernetes <- docker: close
+#   machine_learning <- python: distant
+#   mlops <- docker: distant
+#   playwright <- power_automate: distant
+#   playwright <- python: distant
+#   playwright <- selenium: close
+#   power_apps <- power_automate: close
+#   power_apps <- power_bi: distant
+#   power_automate <- power_bi: distant
+#   power_automate <- selenium: distant
+#   power_automate <- test_automation: distant
+#   power_automate <- vba: distant
+#   power_bi <- excel: distant
+#   power_bi <- power_automate: distant
+#   process_modeling <- data_modeling: distant
+#   process_modeling <- rpa: distant
+#   pytest <- python: close
+#   pytest <- testng: close
+#   python <- java: close
+#   pytorch <- python: distant
+#   rpa <- test_automation: distant
+#   rpa <- vba: distant
+#   sap_fi_co <- sap: close
+#   sap_mm <- sap: close
+#   sap_s4hana <- sap: close
+#   scikit_learn <- python: distant
+#   selenium <- power_automate: distant
+#   selenium <- python: distant
+#   sharepoint <- confluence: close
+#   spark <- python: distant
+#   sql <- excel: distant
+#   sql <- python: distant
+#   sql_server <- sql: close
+#   ssis <- sql: distant
+#   statistics <- data_modeling: distant
+#   statistics <- data_visualization: distant
+#   tableau <- power_bi: close
+#   test_automation <- rpa: distant
+#   test_management <- test_automation: close
+#   tosca <- power_automate: distant
+#   tosca <- selenium: close
+#   typescript <- java: close
+#   typescript <- python: close
+#   uipath <- power_automate: close
+#   uipath <- selenium: distant
+#   uipath <- test_automation: distant
+#   uipath <- vba: distant
+
+conditions: {driving_licence_b: true, travel_share_max: 20, shift_work: false, commute_km_max: 50, remote_only: false,
+             full_time: true}
+
+cvs:
+  maria_berger:
+    language: de
+    skills: [selenium, java, testng, jenkins, git, jira, confluence, postman, sql, test_automation, istqb_foundation,
+             agile_scrum, english, german]
+    not_skills: [cypress]
+    strength: {selenium: outcome, postman: activity, sql: claim, confluence: claim}
+    match_status:
+      01_test_automation_linz:
+        selenium: met              # outcome: own framework, regression tests in 4 hours instead of 5 days
+        cypress: partial           # related: Selenium (close); wanting to learn Cypress is no skill
+      02_test_automation_wels:
+        playwright: partial        # related: Selenium (close)
+        gitlab_ci: partial         # related: Jenkins (close)
+      03_senior_sdet_vienna:
+        kubernetes: gap            # nothing related in the CV
+      04_rpa_developer_linz:
+        sql: partial               # only listed ("SQL (Grundkenntnisse)"), no evidence of use
+      11_sap_test_consultant:
+        istqb_foundation: met      # a certificate counts as listed; 2014 is not stale for it
+      12_it_business_analyst:
+        jira: met                  # activity: defect tracking in Jira since 2019
+        confluence: partial        # only listed under Werkzeuge
+      16_senior_test_automation_steyr:
+        test_automation: met       # 12 years, at least 5 required
+      22_power_bi_developer_linz:
+        power_bi: gap              # nothing related in the CV
+      23_reporting_analyst_graz:
+        university_degree: met     # Bachelor Wirtschaftsinformatik meets "Studium, gleich welcher Fachrichtung"
+    role_tiers:
+      # start table 3 for rpa: 04, 05 and 21 are tier 2 (UiPath, Power Automate distant: 12 to 20 weeks of gaps)
+      test_automation: 1           # 01, 03, 16, 18 tier 1 (all met or one related); 02, 17 tier 2 -> 4/6 tier 1
+      rpa_process_automation: 2    # 04, 05, 21 tier 2 (UiPath, Power Automate distant); 19, 20 years gap -> 3/5
+      data_analysis_bi: 3          # only 07 tier 2 (SQL Server related); Power BI, Excel, strong SQL missing -> 1/6
+      data_engineering: 3          # 09, 27 years gap; strong SQL, Power BI, Airflow, Kafka, AWS missing -> 0/5
+  daniel_novak:
+    language: en
+    skills: [power_bi, sql, excel, python, vba, data_modeling, data_visualization, pl_300, czech, english, german]
+    not_skills: [azure_data_factory]
+    strength: {power_bi: outcome, sql: activity, data_modeling: activity, python: claim}
+    match_status:
+      06_data_analyst_linz:
+        power_bi: met              # outcome: 14 dashboards, weekly report in 1 hour instead of a day
+        python: partial            # only listed ("Some Python ... from online courses")
+      08_junior_data_analyst_wien:
+        tableau: partial           # related: Power BI (close)
+        university_degree: met     # Bachelor of Economics meets "Abgeschlossenes Studium"
+      09_data_engineer_aws:
+        aws: gap                   # nothing related in the CV
+        python: gap                # "Very good Python" (strong) against basic: two levels short
+      10_data_engineer_azure:
+        azure_data_factory: gap    # only planned ("Planning to learn"), not in the profile
+      12_it_business_analyst:
+        jira: gap                  # nothing related in the CV
+      22_power_bi_developer_linz:
+        power_bi: met              # 5 years, at least 2 required
+      23_reporting_analyst_graz:
+        german: partial            # B2 (working) against "Sehr gute Deutschkenntnisse" (strong)
+      24_junior_reporting_analyst_salzburg:
+        vba: met                   # VBA macros until 2021: not stale (8 years)
+    role_tiers:
+      # start table 3 for rpa: 04, 05 and 21 are tier 2 (UiPath, Power Automate, Power Apps distant to VBA or Power BI)
+      test_automation: 3           # 01, 03, 16 years gap; 17, 18 over 26 weeks; only 02 tier 2 -> 1/6
+      rpa_process_automation: 2    # 04, 05, 21 tier 2 (8 to 24 weeks of gaps); 19, 20 years gap -> 3/5
+      data_analysis_bi: 1          # 06, 22, 23, 24 tier 1 (Power BI, SQL, data modelling met); 07, 08 tier 2 -> 4/6
+      data_engineering: 2          # 10, 25, 26 tier 2 (12 to 24 weeks; dbt related to SQL); 09, 27 years gap -> 3/5
+  sabine_huber:
+    language: de
+    skills: [power_automate, rpa, sap, excel, cpp, visual_basic, python, docker, htl_diploma, german, english]
+    not_skills: [kubernetes]
+    strength: {power_automate: outcome, cpp: activity, python: claim, docker: claim}
+    match_status:
+      01_test_automation_linz:
+        selenium: gap              # only distant skills in the CV
+      02_test_automation_wels:
+        docker: partial            # only listed under Kenntnisse
+      03_senior_sdet_vienna:
+        kubernetes: partial        # related: Docker (close); the interest in Kubernetes is no skill
+      04_rpa_developer_linz:
+        uipath: partial            # related: Power Automate (close)
+      05_power_platform_specialist:
+        power_automate: met        # outcome: 400 orders per month created automatically
+        german: met                # native speaker
+      12_it_business_analyst:
+        jira: gap                  # nothing related in the CV
+      16_senior_test_automation_steyr:
+        cpp: partial               # stale: C++ last used in 2012 (more than 8 years ago)
+      19_process_automation_sap_wels:
+        english: partial           # B2 (working) against "Verhandlungssicheres Englisch" (strong)
+        rpa: partial               # 2 years since 2024, at least 3 required (within the 2-year margin)
+      23_reporting_analyst_graz:
+        university_degree: gap     # HTL-Matura is no university degree
+    role_tiers:
+      test_automation: 3           # 01, 03, 16 years gap; 18 over 26 weeks; 02, 17 tier 2 -> 2/6 (33 %)
+      rpa_process_automation: 2    # all five tier 2 (8 to 16 weeks; UiPath, C# related; SQL missing), none 80 % -> 5/5
+      data_analysis_bi: 3          # 06, 24 tier 2 (Excel); 08, 23 degree gap (HTL); 07, 22 over 26 weeks -> 2/6 (33 %)
+      data_engineering: 3          # only 10 tier 2; 09, 27 years gap; 25, 26 over 26 weeks -> 1/5
+
+postings:
+  01_test_automation_linz:
+    role_family: test_automation
+    seniority: mid
+    must: [test_automation, selenium, java, jenkins, english]
+    nice: [cypress, istqb_foundation]
+  02_test_automation_wels:
+    role_family: test_automation
+    seniority: mid
+    must: [python, pytest, playwright, gitlab_ci]
+    nice: [docker]
+  03_senior_sdet_vienna:
+    role_family: test_automation
+    seniority: senior
+    must: [test_automation, java, selenium, api_testing, english]
+    nice: [kubernetes]
+  04_rpa_developer_linz:
+    role_family: rpa_process_automation
+    seniority: mid
+    must: [uipath, process_modeling, sql]
+    nice: [power_automate]
+  05_power_platform_specialist:
+    role_family: rpa_process_automation
+    seniority: mid
+    must: [power_automate, power_apps, sharepoint, german, english]
+    nice: [copilot_studio]
+  06_data_analyst_linz:
+    role_family: data_analysis_bi
+    seniority: mid
+    must: [power_bi, sql, excel, data_modeling]
+    nice: [python]
+  07_bi_developer_graz:
+    role_family: data_analysis_bi
+    seniority: mid
+    must: [power_bi, sql_server, ssis, data_warehousing]
+    nice: [azure_data_factory]
+  08_junior_data_analyst_wien:
+    role_family: data_analysis_bi
+    seniority: junior
+    must: [university_degree, excel, tableau, sql, statistics]
+    nice: [r]
+  09_data_engineer_aws:
+    role_family: data_engineering
+    seniority: mid
+    must: [etl, python, sql, airflow, dbt, aws]
+    nice: [spark, docker]
+  10_data_engineer_azure:
+    role_family: data_engineering
+    seniority: mid
+    must: [azure_data_factory, databricks, spark, python]
+    nice: [dp_203]
+  11_sap_test_consultant:
+    role_family: sap_test_consulting
+    seniority: mid
+    must: [test_management, sap_s4hana, sap_mm]
+    nice: [tosca, istqb_foundation]
+  12_it_business_analyst:
+    role_family: business_analysis
+    seniority: mid
+    must: [requirements_engineering, process_modeling, jira, confluence, stakeholder_management, sql]
+    nice: []
+  13_software_developer_csharp:
+    role_family: software_development
+    seniority: mid
+    must: [bachelor_computer_science, csharp, dotnet, sql_server, git]
+    nice: [angular]
+  14_technical_inside_sales:
+    role_family: technical_sales
+    seniority: mid
+    must: [customer_support, sales, industrial_automation, english]
+    nice: [sap_sd]
+  15_senior_ml_engineer:
+    role_family: data_science_ml
+    seniority: senior
+    must: [masters_computer_science, machine_learning, python, pytorch, mlops, kubernetes]
+    nice: []
+  16_senior_test_automation_steyr:
+    # special case: "mindestens 5 Jahre" (min_years 5 on test_automation)
+    role_family: test_automation
+    seniority: senior
+    must: [test_automation, java, selenium, git, english]
+    nice: [cucumber, cpp]
+  17_frontend_test_engineer_vienna:
+    role_family: test_automation
+    seniority: mid
+    must: [test_automation, cypress, typescript, github_actions, english]
+    nice: [playwright]
+  18_test_engineer_graz:
+    # special case: no must/nice distinction - every listed skill is a must requirement
+    role_family: test_automation
+    seniority: mid
+    must: [test_automation, java, api_testing, jira, agile_scrum]
+    nice: []
+  19_process_automation_sap_wels:
+    # special case: "Verhandlungssicheres Englisch" (min_level strong on english)
+    role_family: rpa_process_automation
+    seniority: mid
+    must: [power_automate, sap, rpa, sql, english]
+    nice: [python]
+  20_rpa_developer_vienna:
+    role_family: rpa_process_automation
+    seniority: mid
+    must: [uipath, csharp, sql, english]
+    nice: [uipath_certified, power_automate]
+  21_junior_automation_leonding:
+    role_family: rpa_process_automation
+    seniority: junior
+    must: [power_automate, python, sql, english]
+    nice: [power_apps]
+  22_power_bi_developer_linz:
+    role_family: data_analysis_bi
+    seniority: mid
+    must: [power_bi, sql, data_modeling, data_warehousing, data_visualization, english]
+    nice: [pl_300, python]
+  23_reporting_analyst_graz:
+    # special case: "Abgeschlossenes Studium" of any field (university_degree; any bachelor or master meets it)
+    role_family: data_analysis_bi
+    seniority: mid
+    must: [university_degree, excel, power_bi, sql, german]
+    nice: [vba]
+  24_junior_reporting_analyst_salzburg:
+    role_family: data_analysis_bi
+    seniority: junior
+    must: [excel, power_bi, sql, data_visualization, english]
+    nice: [vba, python]
+  25_analytics_engineer_vienna:
+    role_family: data_engineering
+    seniority: mid
+    must: [sql, data_modeling, data_warehousing, dbt, python]
+    nice: [snowflake, airflow]
+  26_junior_data_engineer_linz:
+    role_family: data_engineering
+    seniority: junior
+    must: [sql, python, etl, data_modeling, power_bi, airflow]
+    nice: [docker]
+  27_senior_data_engineer_streaming_graz:
+    # special case: a skill outside the vocabulary - "Apache Flink" (nice) is not listed, as no id resolves; the
+    # extraction should propose it as a new skill. It must stay out of skills_seed.yaml.
+    role_family: data_engineering
+    seniority: senior
+    must: [etl, python, kafka, spark, aws, english]
+    nice: [kubernetes]
+  28_sap_test_manager_ried:
+    role_family: sap_test_consulting
+    seniority: mid
+    must: [test_management, sap_s4hana, tosca, german, english]
+    nice: [istqb_foundation, sap_fi_co]
+  29_business_analyst_st_poelten:
+    role_family: business_analysis
+    seniority: mid
+    must: [requirements_engineering, process_modeling, stakeholder_management, german]
+    nice: [ireb_cpre, sql]
+  30_data_scientist_vienna:
+    # special case: long company and benefit text - Kubernetes, Kafka, React, code review, Docker, AWS and the
+    # language lessons there are no requirements
+    role_family: data_science_ml
+    seniority: mid
+    must: [python, machine_learning, statistics, scikit_learn, sql, english]
+    nice: [german]

@@ -1,0 +1,12 @@
+{# Deleting a CV takes two steps without script: open the details, then confirm. #}
+{% from "_macros.html" import notice_box %}
+{% if not locked %}
+<details class="delete"{% if notice and notice.key == "delete_busy" %} open{% endif %}>
+  <summary>{{ t("delete.summary") }}</summary>
+  <form class="card" method="post" action="/cv/{{ cv_id }}/delete" data-busy="{{ t("delete.deleting") }}">
+    <p>{{ t("delete.warning") }}</p>
+    {{ notice_box(notice, ("delete_busy",)) }}
+    <button type="submit" class="danger">{{ t("delete.button") }}</button>
+  </form>
+</details>
+{% endif %}

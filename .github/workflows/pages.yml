@@ -1,0 +1,49 @@
+# Builds the static demo (`skillpose demo site`) and deploys it to GitHub Pages.
+#
+# This does nothing useful until the repository owner turns Pages on: Settings > Pages > Source: "GitHub Actions".
+# Before that the deploy job fails, which is harmless; the build job is a pure build check (it needs no
+# configure-pages: the site uses relative links only). The site needs no key and makes no API call.
+
+name: Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - run: pip install -c constraints.txt -e ".[dev,web]"
+      - name: Build the site
+        env:
+          SKILLPOSE_REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+        run: skillpose demo site --out site
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

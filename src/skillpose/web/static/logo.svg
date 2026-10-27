@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 110" width="240" height="110" role="img" aria-labelledby="logo-title">
+<!-- © 2026 Hans Czylok. Not licensed under the MIT License; see "Name and logo" in README.md. -->
+<title id="logo-title">skillpose logo: two hands whose index fingers almost touch, with a spark between them</title>
+<style>
+.hand { fill: none; stroke: #1f2328; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+@media (prefers-color-scheme: dark) { .hand { stroke: #e6edf3; } }
+</style>
+<path class="hand" d="M8,62 C30,58 45,56 58,57 C66,57 72,58 78,60 L104,62 C108,62 110,64 110,66 C110,68 108,70 104,70 L82,70 C80,74 76,77 70,78 C64,80 58,80 54,78 C40,80 25,82 8,84"/>
+<path class="hand" transform="translate(240,-8) scale(-1,1)" d="M8,62 C30,58 45,56 58,57 C66,57 72,58 78,60 L104,62 C108,62 110,64 110,66 C110,68 108,70 104,70 L82,70 C80,74 76,77 70,78 C64,80 58,80 54,78 C40,80 25,82 8,84"/>
+<path fill="#EF9F27" d="M120,50 Q122,60 132,62 Q122,64 120,74 Q118,64 108,62 Q118,60 120,50 Z"/>
+</svg>

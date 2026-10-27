@@ -1,0 +1,597 @@
+# Texte der Oberfläche (Deutsch). Gleiche Schlüssel wie en.yaml; {name} wird beim Anzeigen ersetzt.
+app:
+  name: skillpose
+  note: "Privates, nicht-kommerzielles Lernprojekt. Analysen mit Claude (KI) von Anthropic: Ergebnisse können falsch sein, bitte prüfen."
+
+ai:
+  generated: "Von Claude (KI) erstellt. Kann Fehler enthalten. Bitte mit dem Lebenslauf und dem Inserat vergleichen."
+  translated: "Übersetzt von Claude (KI). Kann Fehler enthalten."
+
+quotes:
+  verbatim: Zitate stehen wörtlich in der Originalsprache.
+
+nav:
+  main: Hauptnavigation
+  cv: Lebenslauf
+  start: Start
+  postings: Inserate
+  costs: Kosten
+  profile: Profil
+  matches: Abgleich
+  market: Marktsicht
+  paths: Pfade
+
+header:
+  mode: Modus
+  demo: Demo
+  own: Eigene Daten
+  month: Kosten im Monat
+  language: Sprache
+
+taskline:
+  running: "läuft seit {time}"
+  done: "fertig {time}"
+  error: Fehler
+  waiting: "Wartet: {label}"
+
+task:
+  cv: Lebenslauf analysieren
+  rematch: Abgleich neu berechnen
+  postings: Inserate analysieren
+  collect: Batch abholen und abgleichen
+  path: Entwicklungspfad erstellen
+
+progress:
+  saving_results: Ergebnisse speichern
+  matching: "Abgleich mit Lebenslauf: {done} von {total} geprüft"
+  saving_matches: Abgleich speichern
+
+start:
+  cvs: Lebensläufe
+  none: Noch kein Lebenslauf hochgeladen.
+  created: "hochgeladen {time}"
+  analyzed: analysiert
+  not_analyzed: nicht analysiert
+  upload: Lebenslauf hochladen
+  file: "Datei: PDF, DOCX, TXT oder MD, höchstens 5 MB"
+  upload_button: Hochladen
+  uploading: Hochladen läuft …
+  no_key: "Kein API-Schlüssel eingetragen: Nur die Demo ist verfügbar."
+  demo_persons: Demo-Personen (erfunden)
+  cv_de: Lebenslauf auf Deutsch
+  cv_en: Lebenslauf auf Englisch
+
+hero:
+  where: Wo stehe ich?
+  whither: Wohin gehe ich?
+  lead: Kompetenzen mit Zitaten aus dem Lebenslauf belegt, mit Inseraten verglichen, dazu Lücken und Entwicklungspfade.
+  demo: Demo ansehen
+  own: Eigener Lebenslauf
+  own_hint: Für eine eigene Analyse die App lokal mit eigenem Anthropic-API-Schlüssel starten.
+  own_guide: Anleitung im README
+
+logo:
+  alt: "Logo von skillpose: zwei Hände, deren Zeigefinger sich fast berühren, dazwischen ein Funke"
+
+steps:
+  profile: Profil – Position
+  matches: Abgleich – Lücken
+  market: Marktsicht – Stufen
+  paths: Pfade – Orientierung
+
+demo:
+  hint: "Die Demo zeigt erfundene Personen mit fertigen Ergebnissen. Sie kostet nichts."
+  missing: "Demo-Daten fehlen: „skillpose demo build“ erzeugt sie."
+
+blocked:
+  title: Gesperrt
+  no_key: "Kein API-Schlüssel eingetragen: Hochladen und Analysieren sind gesperrt. Nur die Demo ist verfügbar."
+
+error:
+  title: Fehler
+  not_found: Diese Seite gibt es nicht.
+  invalid: Die Anfrage ist ungültig.
+
+common:
+  back: Zurück zur Startseite
+
+role:
+  test_automation: Testautomatisierung
+  qa_management: QA-Management
+  rpa_process_automation: RPA und Prozessautomatisierung
+  sap_test_consulting: SAP-Testberatung
+  business_analysis: Business-Analyse
+  data_analysis_bi: Datenanalyse und BI
+  data_engineering: Data Engineering
+  data_science_ml: Data Science und maschinelles Lernen
+  ai_solutions_engineering: KI-Lösungen
+  software_development: Softwareentwicklung
+  it_project_management: IT-Projektmanagement
+  technical_sales: Technischer Vertrieb
+  other: Andere
+
+category:
+  tool: Werkzeug
+  programming_language: Programmiersprache
+  method: Methode
+  domain: Fachgebiet
+  certificate: Zertifikat
+  degree: Abschluss
+  spoken_language: Sprache
+  soft: Persönliche Kompetenz
+  unknown: Sonstige
+
+level:
+  basic: Grundkenntnisse
+  working: Praxiswissen
+  strong: Vertieftes Wissen
+  expert: Expertenwissen
+
+kind:
+  tool: Werkzeug
+  experience: Erfahrung
+  certificate: Zertifikat
+  degree: Abschluss
+  spoken_language: Sprache
+  soft: Persönliche Kompetenz
+  condition: Rahmenbedingung
+
+seniority:
+  junior: Junior
+  mid: Mittleres Niveau
+  senior: Senior
+  lead: Leitung
+
+strength:
+  outcome: Ergebnis
+  activity: Tätigkeit
+  claim: Nur genannt
+
+status:
+  met: erfüllt
+  partial: teilweise
+  gap: Lücke
+  unverifiable: nicht prüfbar
+  unanswered: unbeantwortet
+
+gap:
+  weeks: Wochen
+  months: Monate
+  years: Jahre Erfahrung
+  certificate: Zertifikat
+  degree: Abschluss
+
+reason:
+  evidenced: belegt
+  not_in_cv: nicht im Lebenslauf
+  only_listed: nur aufgezählt, kein Beleg für den Einsatz
+  last_used: "zuletzt genutzt {year}"
+  level: "Niveau {have}, verlangt {need}"
+  years: "{have} von {need} Jahren"
+  years_required: "{have} von {need} verlangten Jahren"
+  years_unknown: Dauer der Nutzung unbekannt
+  related: "verwandt: {id}"
+  higher_degree: "höherer Abschluss: {id}"
+  higher_degree_other_field: "höherer Abschluss, anderes Fach: {id}"
+  soft_unverifiable: "Soft Skill: aus dem Lebenslauf nicht prüfbar"
+  unanswered: im Profil nicht beantwortet
+  no_question: das Profil fragt nicht nach dieser Bedingung
+  working_time_unknown: Arbeitszeit des Inserats nicht erkannt
+  travel_unknown: Reiseanteil des Inserats nicht erkannt
+  licence: "Profil: Führerschein B"
+  no_licence: "Profil: kein Führerschein B"
+  travel: "Profil: Reisen bis {have} %, Inserat verlangt {need} %"
+  shift_work: "Profil: Schichtarbeit möglich"
+  no_shift_work: "Profil: keine Schichtarbeit"
+  remote_only: "Profil: ausschließlich von zu Hause"
+  not_remote_only: "Profil: Arbeit vor Ort möglich"
+  commute: "Profil: Pendeln bis {km} km"
+  full_time: "Profil: Vollzeit möglich"
+  no_full_time: "Profil: Vollzeit nicht möglich"
+  part_time: Inserat verlangt Teilzeit
+
+notice:
+  saved: Gespeichert.
+  deleted: Lebenslauf gelöscht.
+  busy: Eine andere Aufgabe läuft. Bitte warten, bis sie fertig ist, und dann noch einmal versuchen.
+  queued: Eingereiht – startet, wenn die laufende Aufgabe fertig ist.
+  delete_busy: Für diesen Lebenslauf läuft eine Aufgabe. Bitte erst löschen, wenn sie fertig ist.
+  cv_known: Dieser Lebenslauf ist schon vorhanden.
+  text_short: Der Text ist zu kurz zum Analysieren. Es wurde nichts gespeichert.
+  text_long: Der Text ist größer als 5 MB. Es wurde nichts gespeichert.
+  text_locked: "Der Text lässt sich nicht mehr ändern: Das Profil ist daraus entstanden."
+  text_busy: Dieser Lebenslauf wird gerade analysiert. Der Text lässt sich jetzt nicht ändern. Es wurde nichts gespeichert.
+  posting_new: Inserat gespeichert.
+  posting_known: Dieses Inserat war schon vorhanden. Es wurde nichts geändert.
+  uploaded: "{new} neu, {present} schon vorhanden, {skipped} übersprungen"
+  no_open: Es gibt keine offenen Inserate.
+  conditions_saved: "Gespeichert. Der Abgleich aller Lebensläufe folgt diesen Antworten; dafür ist kein API-Aufruf nötig."
+
+upload:
+  missing: Bitte zuerst eine Datei wählen.
+  type: "Dateityp {suffix} wird nicht unterstützt – bitte .pdf, .docx, .txt oder .md verwenden"
+  size: Datei größer als 5 MB
+  text: "Kein lesbarer Text gefunden – gescanntes PDF? Den Lebenslauf als PDF mit Text, DOCX oder TXT exportieren."
+  broken: Die Datei lässt sich nicht lesen. Ist das PDF oder DOCX beschädigt?
+
+cost:
+  cents:
+    one: "ca. {count} Cent"
+    other: "ca. {count} Cent"
+  usd: "ca. {usd} USD"
+
+# eine Zahl mit ihrem Hauptwort; .one ist die Einzahl
+count:
+  postings:
+    one: "{count} Inserat"
+    other: "{count} Inserate"
+  skills:
+    one: "{count} Kompetenz"
+    other: "{count} Kompetenzen"
+  stations:
+    one: "{count} Station"
+    other: "{count} Stationen"
+  batches:
+    one: "{count} Batch"
+    other: "{count} Batches"
+  matches:
+    one: "{count} Abgleich"
+    other: "{count} Abgleiche"
+
+# Seiten langer Listen
+paging:
+  per_page: Pro Seite
+  range: "{noun} {first}–{last} von {total}"
+  noun_postings: Inserate
+  noun_matches: Abgleiche
+  nav: Seiten
+  previous: Zurück
+  next: Weiter
+  page: "Seite {number}"
+  gap: "…"
+
+confirm:
+  title: Bestätigen
+  accept: "Ja, ca. {cost} USD ausgeben"
+  cancel: Abbrechen
+
+cv:
+  text_title: Text des Lebenslaufs
+  text_label: Aus der Datei gelesener Text. Bitte prüfen und Fehler korrigieren.
+  chars:
+    one: "{count} Zeichen"
+    other: "{count} Zeichen"
+  save_text: Text speichern
+  saving: Speichern …
+  analyze: "Analysieren ({cost})"
+  analyzing: Analysiere …
+  analyze_hint: Analysiert wird der gespeicherte Text. Änderungen bitte zuerst speichern.
+  privacy_hint: "Beim Analysieren geht dieser Text an die Anthropic-API (USA). Entferne vorher, was die Analyse nicht braucht: Adresse, Telefon, Geburtsdatum, Familienstand, Religion, Angaben zu Gesundheit oder Behinderung. Fotos liest skillpose nicht."
+  fixed: Das Profil ist aus diesem Text entstanden. Deshalb lässt er sich nicht mehr ändern.
+  to_profile: Zum Profil
+  limit: "Monatsgrenze: {spent} von {limit} USD ausgegeben, diese Analyse kostet etwa {cost} USD. Es wurde nichts gesendet."
+  confirm_question: "Diese Analyse kostet etwa {cost} USD. Das ist mehr als die {threshold} USD, ab denen du bestätigen musst."
+  confirm_changed: Die Kosten haben sich seit der Frage geändert. Bitte noch einmal bestätigen.
+  cut_off: "Die Antwort war zu lang und wurde abgeschnitten (Grenze {limit} Token). Kosten des Versuchs: {usd} USD. Bitte erneut versuchen oder den Lebenslauf kürzen."
+  refused: "Claude (KI) hat die Analyse abgelehnt. Kosten des Versuchs: {usd} USD. Bitte den Text prüfen und erneut versuchen."
+
+delete:
+  summary: Diesen Lebenslauf löschen
+  short: Löschen
+  warning: Das löscht den Lebenslauf mit Profil, Abgleichen und Pfaden. Inserate bleiben. Es lässt sich nicht rückgängig machen.
+  button: Ja, endgültig löschen
+  deleting: Lösche …
+
+profile:
+  created: "Profil erstellt {time}"
+  none: Dieser Lebenslauf ist noch nicht analysiert.
+  running: Die Analyse läuft. Diese Seite aktualisiert sich selbst.
+  to_analysis: Zum Text und zur Analyse
+  no_skills: Das Profil enthält keine Kompetenzen.
+  years:
+    one: "{count} Jahr"
+    other: "{count} Jahre"
+  years_unknown: Dauer der Nutzung unbekannt
+  last_used: "zuletzt genutzt {year}"
+  no_evidence: kein Beleg
+  today: heute
+  unverified: nicht im Text gefunden
+  hidden: ausgeblendet
+  hide: Ausblenden
+  show: Einblenden
+  level: Niveau
+  save_level: Niveau speichern
+  saving: Speichern …
+
+conditions:
+  title: Rahmenbedingungen
+  intro: "Inserate nennen Bedingungen, zum Beispiel Führerschein oder Reisen. Ein Lebenslauf zeigt sie nicht. Du beantwortest sie hier einmal. Die Antworten gelten für jeden Lebenslauf und bleiben in deiner Datenbank; sie gehen nie an Claude. Ein leeres Feld zählt als nicht beantwortet; diese Bedingung wird dann nicht geprüft, außer es steht anders bei der Frage. Eine Muss-Bedingung, die du nicht erfüllst, ist ein K.-o.: Das Inserat kommt auf Stufe 3."
+  intro_locked: "Inserate nennen Bedingungen, zum Beispiel Führerschein oder Reisen. Ein Lebenslauf zeigt sie nicht. Darum werden sie einmal im Profil beantwortet, für jeden Lebenslauf der Datenbank. Die Antworten gehen nie an Claude. Eine Muss-Bedingung, die nicht erfüllt ist, ist ein K.-o.: Das Inserat kommt auf Stufe 3. Ohne API-Schlüssel kann man die Antworten nur lesen."
+  unset: Nicht beantwortet
+  answer_yes: "Ja"
+  answer_no: "Nein"
+  driving_licence_b: Hast du den Führerschein B?
+  driving_licence_b_hint: "Ja: erfüllt. Nein: Ein Inserat, das ihn als Muss verlangt, ist ein K.-o."
+  travel_share_max: Bis zu wie viel Prozent deiner Arbeitszeit kannst du reisen?
+  travel_share_max_hint: "Ganze Zahl von 0 bis 100; 0 heißt: keine Reisen. Ein Inserat, das als Muss mehr Reisen verlangt, als du nennst, ist ein K.-o. Steht im Inserat gar keine Zahl, rechnet die App mit {default} %. Steht dort eine Zahl ohne Prozent (zum Beispiel „2 Tage pro Woche“), prüft die App die Reisen nicht."
+  shift_work: Kannst du in Schichten arbeiten?
+  shift_work_hint: "Ja: erfüllt. Nein: Ein Inserat, das Schichtarbeit als Muss verlangt, ist ein K.-o."
+  commute_km_max: Wie weit kannst du höchstens zur Arbeit pendeln (in Kilometern)?
+  commute_km_max_hint: "Ganze Zahl in Kilometern. Die App rechnet noch keine Entfernungen. Schon mit einer Zahl gilt jeder Arbeitsort eines Inserats als erfüllt, es sei denn, du musst ausschließlich von zu Hause arbeiten. Die Zahl steht nur als Grund beim Inserat."
+  remote_only: Musst du ausschließlich von zu Hause arbeiten – nie vor Ort?
+  remote_only_hint: "Antworte nur mit Ja, wenn du nie vor Ort arbeiten kannst. Ja: Jeder Arbeitsort, den ein Inserat nennt (zum Beispiel „Standort Linz“), ist dann nicht erfüllt. Ist er ein Muss, ist das ein K.-o. Nein: Arbeit vor Ort ist möglich, der Arbeitsort ist erfüllt."
+  full_time: Kannst du in Vollzeit arbeiten?
+  full_time_hint: "Ja: erfüllt. Nein: Ein Inserat, das Vollzeit als Muss verlangt, ist ein K.-o. Nennt ein Inserat Teilzeit, ist es immer erfüllt."
+  notes: Notizen
+  notes_hint: Nur für dich. Zählt nicht beim Abgleich und geht nie an Claude.
+  up_to_travel_share_max: "bis {count} %"
+  up_to_commute_km_max: "bis {count} km"
+  save: Antworten speichern
+  saving: Speichern …
+  error_travel_share_max: Bitte eine ganze Zahl von 0 bis 100.
+  error_commute_km_max: Bitte eine ganze Zahl in Kilometern, 0 oder mehr.
+  error_notes: "Höchstens {limit} Zeichen."
+  key:
+    driving_licence_b: Führerschein B
+    travel: Reisebereitschaft
+    shift_work: Schichtarbeit
+    location: Arbeitsort
+    working_time: Arbeitszeit
+
+taskdone:
+  cv: "Profil fertig: {skills}, {postings} abgeglichen"
+  rematch: "Abgleich neu berechnet: {postings}"
+  conditions: "Abgleich mit deinen Antworten neu berechnet: {matches}"
+  postings: "Inserate analysiert: {done}, offen: {left}"
+  nothing_open: Keine offenen Inserate.
+  recount: "Nichts gesendet: Jetzt sind {now} Inserate offen, beim Start waren es {asked}. Bitte die Analyse neu starten."
+  batch: "Batch abgeschickt: {postings} zum halben Preis. Diese Seite holt das Ergebnis selbst ab."
+  batches: "{postings} in {batches} zum halben Preis abgeschickt. Diese Seite holt die Ergebnisse selbst ab."
+  split: "{analyzed} analysiert, {sent} in {batches} zum halben Preis abgeschickt."
+  limit:
+    one: "Monatsgrenze erreicht – {count} Inserat bleibt offen"
+    other: "Monatsgrenze erreicht – {count} Inserate bleiben offen"
+  match_limit: "Monatsgrenze erreicht – der Abgleich ist nicht aktuell."
+  collect: "Batch abgeholt – analysiert: {done}, ohne Ergebnis: {failed}"
+  collect_partly: "Batch abgeholt – analysiert: {done}, ohne Ergebnis: {failed}; die übrigen Batches prüft die Seite beim nächsten Besuch wieder (Fehler: {error})"
+  path: "Pfad für {role} fertig (Schritte: {steps}, Wochen gesamt: {weeks})"
+
+postings:
+  title: Inserate
+  intro: Inserate einfügen oder hochladen. Danach liest Claude sie und vergleicht sie mit deinem Lebenslauf.
+  list_title: Alle Inserate
+  none: Noch keine Inserate.
+  col_title: Inserat
+  col_role: Rollenfamilie
+  col_status: Status
+  col_seen: Gesehen am
+  failed: fehlgeschlagen
+  status:
+    analyzed: analysiert
+    open: offen
+    batch: im Batch
+  batch_running:
+    one: "Batch läuft – Stand wird alle 30 s geprüft"
+    other: "{count} Batches laufen – Stand wird alle 30 s geprüft"
+  batch_progress: "Batch läuft: {done} von {total} fertig (Stand {time})"
+  batch_progress_of: "Batch {number} von {batches}: {done} von {total} fertig (Stand {time})"
+  batch_waiting_of: "Batch {number} von {batches}: noch kein Stand"
+  batch_failed: "{failed} fehlgeschlagen"
+  paste_title: Text einfügen
+  paste_text: Text des Inserats
+  paste_ref: "Name (freiwillig; sonst die erste Zeile)"
+  paste_button: Inserat speichern
+  pasting: Speichere …
+  paste_empty: Bitte zuerst den Text eines Inserats einfügen.
+  too_long: "Übersprungen: „{ref}“ hat {chars} Zeichen, erlaubt sind höchstens {limit}."
+  upload_title: Dateien hochladen
+  upload_label: "Dateien: MD, TXT, JSON oder CSV, je höchstens 5 MB, zusammen höchstens 6 MB"
+  upload_hint: "JSON: eine Liste von Objekten mit „text“ und „ref“. CSV: eine Kopfzeile mit der Spalte „text“ und, freiwillig, „ref“."
+  upload_button: Hochladen
+  uploading: Hochladen läuft …
+  upload_missing: Bitte zuerst mindestens eine Datei wählen.
+  upload_type: "{name}: Dateityp {suffix} wird nicht unterstützt – bitte .md, .txt, .json oder .csv verwenden. Aus dieser Datei wurde nichts gespeichert."
+  upload_size: "{name}: Datei größer als 5 MB. Aus dieser Datei wurde nichts gespeichert."
+  upload_format: "{name}: Die Datei lässt sich nicht lesen ({detail}). JSON braucht eine Liste von Objekten mit „text“. CSV braucht eine Kopfzeile mit der Spalte „text“. Aus dieser Datei wurde nichts gespeichert."
+  upload_structure: unerwarteter Aufbau
+  analyze_title: Analysieren
+  analyze: "Offene analysieren ({count}, {cost}; ab {threshold}: das erste sofort, der Rest in Batches zum halben Preis)"
+  analyzing: Analysiere …
+  nothing_open: Keine offenen Inserate.
+  limit: "Monatsgrenze: {spent} von {limit} USD ausgegeben, diese Analyse kostet etwa {cost} USD. Es wurde nichts gesendet."
+  confirm_question: "Offene Inserate: {count}. Diese Analyse kostet etwa {cost} USD. Das ist mehr als die {threshold} USD, ab denen du bestätigen musst."
+  confirm_changed: Die Zahl der offenen Inserate hat sich seit der Frage geändert. Bitte noch einmal bestätigen.
+
+posting:
+  back: Zurück zu den Inseraten
+  back_match: Zurück zum Abgleich
+  seen: "Gesehen am {time}"
+  refs: Quellen
+  text_title: Vollständiger Text
+  requirements: Erkannte Anforderungen
+  seniority: Erfahrungsstufe
+  min_level: "Mindestniveau: {level}"
+  min_years: "Mindestjahre: {years}"
+  not_analyzed: Dieses Inserat ist noch nicht analysiert. Die Anforderungen, die Claude darin liest, erscheinen hier nach der Analyse.
+  show_original: Original anzeigen
+  translated_note: "Demo: Claude (KI) hat die Inserate in die Sprache der Oberfläche übersetzt. Das Original steht auf der Seite jedes Inserats."
+
+tier:
+  fits: "1 · passt"
+  learnable: "2 · lernbar"
+  big_gap: "3 · große Lücke"
+  none: "– · zu wenige Inserate"
+  help_title: Was bedeuten die Stufen?
+  help_best: 1 ist am besten.
+  help_1: "Stufe 1 – passt weitgehend: mindestens {tier1_pct} % der Muss-Anforderungen erfüllt (teilweise erfüllt zählt halb), keine Lücke bei Berufsjahren oder Abschluss und keine Muss-Bedingung, die du nicht erfüllst."
+  help_2: "Stufe 2 – Lücken lernbar: keine Lücke bei Berufsjahren oder Abschluss und keine Muss-Bedingung, die du nicht erfüllst; alle fehlenden Muss-Anforderungen zusammen in höchstens {weeks} Wochen lernbar."
+  help_3: "Stufe 3 – große Lücke: sonst, z. B. fehlende Berufsjahre, ein fehlender Abschluss oder mehr als {weeks} Wochen."
+  help_role:
+    one: "Stufe einer Rolle: die beste Stufe, die mindestens {share} % ihrer Inserate erreichen; mindestens {count} Inserat."
+    other: "Stufe einer Rolle: die beste Stufe, die mindestens {share} % ihrer Inserate erreichen; mindestens {count} Inserate."
+
+matches:
+  intro: So gut passen die Inserate zu diesem Lebenslauf. Ein Klick auf den Titel zeigt jede Anforderung.
+  no_profile: Dieser Lebenslauf ist noch nicht analysiert.
+  none: Noch kein Abgleich. Zuerst Inserate analysieren.
+  to_postings: Zu den Inseraten
+  col_title: Inserat
+  col_role: Rollenfamilie
+  col_tier: Stufe
+  col_must: Muss
+  col_nice: Kann
+  col_gaps: Wichtigste Lücken
+  dash_hint: "Ein Strich bei „Kann“ heißt: Das Inserat nennt keine Muss- oder keine Kann-Anforderung."
+  back: Zurück zum Abgleich
+  show_posting: Ganzes Inserat ansehen
+  requirements: Anforderungen
+  no_requirements: Aus diesem Inserat wurden keine Anforderungen gelesen.
+  must: Muss
+  nice: Kann
+  gap_type: Lücke
+  weeks:
+    one: "ca. {count} Woche"
+    other: "ca. {count} Wochen"
+  cv_quote: Beleg im Lebenslauf
+  posting_quote: Im Inserat
+  no_evidence: kein Beleg im Lebenslauf
+  reason: Grund
+  not_verifiable: Nicht aus dem Lebenslauf prüfbar
+  not_verifiable_hint: Soft Skills belegt ein Lebenslauf nicht. Sie zählen in keiner Abdeckung und keiner Stufe.
+  conditions: Rahmenbedingungen
+  conditions_hint: "Geprüft gegen deine Antworten im Profil. Eine Muss-Bedingung, die du nicht erfüllst, setzt das Inserat auf Stufe 3. Entfernungen prüft die App noch nicht."
+  change_answers: Antworten ändern
+  see_answers: Antworten ansehen
+  condition_met: erfüllt
+  condition_gap: nicht erfüllt
+  condition_unanswered: unbeantwortet
+
+step:
+  cv: Lebenslauf lesen
+  job: Inserate lesen
+  relation: Verwandte Kompetenzen
+  path: Entwicklungspfade
+
+market:
+  intro: So passt dieser Lebenslauf zu den Inseraten jeder Rollenfamilie.
+  coverage: Median der Muss-Abdeckung
+  gaps_title: Häufigste Lücken
+  no_gaps: Keine Lücken.
+  gap_type: Art der Lücke
+  in_postings: "Inserate: {count}"
+  legend_bars: Ein Balken zeigt das Gewicht einer Lücke im Vergleich zur größten Lücke derselben Rolle. Eine fehlende Muss-Anforderung zählt doppelt.
+  blocked_title: Blockiert durch Bedingungen
+  blocked_hint: Diese Muss-Bedingungen der Inserate passen nicht zu deinen Antworten. Es sind keine Lücken, die du lernen kannst.
+
+stability:
+  note: "Zwei Analysen desselben Lebenslaufs: {level_same} % der Niveaus gleich, Rollen-Stufen in {role_tier_same} % gleich (gemessen mit {runs} Läufen am Goldsatz, Rollen mit mindestens {min_jobs} Inseraten)."
+  rules_before: "Gemessen mit den Regeln für Abgleich und Stufen und dem Prompt von Schritt 2 vor dem {date}."
+
+paths:
+  intro: Ein Pfad nennt Schritte, die die häufigsten Lücken einer Rolle schließen. Er nennt Tätigkeiten und Nachweise, keine Kurse und keine Links.
+  no_tier: "Noch keine Rolle hat genug Inserate für eine Stufe (mindestens {count}). Fügen Sie mehr Inserate dieser Rollen hinzu."
+  no_path_yet: Noch ist kein Pfad möglich. Die Gründe stehen unten.
+  without_title: Rollen ohne Pfad
+  without_few: "{role}: {count} von {min} Inseraten – noch keine Stufe, darum kein Pfad. Fügen Sie mehr Inserate dieser Rolle hinzu."
+  without_other:
+    one: "Sonstige Rollen: {count} Inserat – sie passen zu keiner Zielrolle, darum kein Pfad."
+    other: "Sonstige Rollen: {count} Inserate – sie passen zu keiner Zielrolle, darum kein Pfad."
+  without_gaps: "{role}: keine Lücken – kein Pfad nötig."
+  none: Für diese Rolle gibt es noch keinen Pfad.
+  create: "Pfad erstellen ({cost})"
+  recreate: "Neu erstellen ({cost})"
+  creating: Erstelle den Pfad …
+  created: "erstellt {time}"
+  closes: Schließt
+  proof: Nachweis
+  total: Gesamt
+  week: 1 Woche
+  weeks: "{weeks} Wochen"
+  inputs_same: Das Profil und die Marktsicht sind seit dem Erstellen gleich geblieben.
+  inputs_changed: Das Profil oder die Marktsicht haben sich seit dem Erstellen geändert. Ein neuer Pfad würde besser passen.
+  only_de: Dieser Pfad liegt nur auf Deutsch vor.
+  only_en: Dieser Pfad liegt nur auf Englisch vor.
+  too_little:
+    one: "zu wenig Daten (mindestens {count} Inserat)"
+    other: "zu wenig Daten (mindestens {count} Inserate)"
+  no_gaps: keine Lücken – kein Pfad nötig
+  limit: "Monatsgrenze: {spent} von {limit} USD ausgegeben, dieser Pfad kostet etwa {cost} USD. Es wurde nichts gesendet."
+  confirm_question: "Der Pfad für {role} kostet etwa {cost} USD. Das ist mehr als die {threshold} USD, ab denen du bestätigen musst."
+  failed: "Der Pfad für {role} konnte nicht erstellt werden: {reason}"
+  cut_off: "Die Antwort war zu lang und wurde abgeschnitten (Grenze {limit} Token). Kosten des Versuchs: {usd} USD. Bitte erneut versuchen."
+  refused: "Claude (KI) hat die Anfrage abgelehnt. Kosten des Versuchs: {usd} USD. Bitte erneut versuchen."
+
+costs:
+  prompt_set: "Prompts: {label}"
+  month_title: Dieser Monat
+  spent: Ausgegeben im Monat
+  limit: Monatsgrenze
+  rest: Noch frei
+  cache: Anteil Cache-Lesungen
+  steps_month: Je Schritt in diesem Monat
+  steps_all: Je Schritt
+  means_title: Durchschnitt je Aufruf (alle bisherigen Aufrufe)
+  means_title_demo: Durchschnitt je Aufruf (Erzeugung der Demo)
+  means_note: Gemessen in dieser Installation; die Zahlen im README sind eine Momentaufnahme.
+  means_note_demo: Gemessen beim Erzeugen der Demo; die Zahlen im README sind eine Momentaufnahme.
+  mode_batch: Batch
+  mode_single: einzeln
+  col_mode: Modus
+  col_mean: Mittel USD
+  calls_title: "Letzte {count} Aufrufe"
+  no_calls: Noch keine Aufrufe.
+  no_calls_month: In diesem Monat gab es keine Aufrufe.
+  col_step: Schritt
+  col_calls: Aufrufe
+  col_usd: USD
+  col_cache: Cache-Lesungen
+  col_time: Zeit
+  col_model: Modell
+  col_in: Token ein
+  col_out: Token aus
+  col_write: Cache schreiben
+  col_read: Cache lesen
+  col_batch: Batch
+  batch_yes: ja
+  batch_no: nein
+  demo_title: Demo
+  demo_hint: Diese Zahlen zeigen, was das Erzeugen der Demo gekostet hat. Die Demo selbst kostet nichts.
+  demo_total: "Kosten der Demo-Erzeugung: {usd} USD"
+
+export:
+  button: Als Markdown exportieren
+  hint: Die Datei enthält Inhalte deines Lebenslaufs.
+  no_profile: Dieser Lebenslauf ist noch nicht analysiert. Es gibt nichts zu exportieren.
+  title: "skillpose – {name} – Export {date}"
+  title_all: "skillpose – Export {date}"
+  privacy: "Privat: Diese Datei enthält Inhalte deines Lebenslaufs. Halte sie privat: Nicht veröffentlichen, nicht committen."
+  tiers_title: Stufen
+  tier_words: "Die Stufen heißen in dieser Datei {words}."
+  cv_heading: "Lebenslauf {id}: {name}"
+  cv_label: "Lebenslauf {id} ({name})"
+  overview_title: Überblick
+  uploaded: "Hochgeladen: {time} UTC"
+  text_length: "Text: {length}"
+  profile_counts: "Profil: {skills}, {stations}"
+  skills_hidden: "{count} ausgeblendet"
+  levels: "Niveaus der Kompetenzen: {levels}"
+  skills_title: Kompetenzen
+  col_skill: Kompetenz
+  col_years: Jahre
+  col_last_used: Zuletzt genutzt
+  col_evidence: Belege
+  col_quote: Stärkster Beleg
+  col_gaps: Häufigste Lücken (Inserate)
+  col_open: Offene Muss-Anforderungen
+  col_not_verifiable: Nicht aus dem Lebenslauf prüfbar
+  blocked_title: "Blockiert durch Bedingungen (Muss-Bedingungen, die die Antworten im Profil nicht erfüllen):"
+  compare_title: Vergleich der Lebensläufe
+  only_in: "Nur in {cv}: {skills}"
+  other_level: "Verschiedene Niveaus: {skills}"
+  level_in: "Lebenslauf {id}: {level}"
+
+site:
+  note: Statische Demo mit erfundenen Daten – für eine eigene Analyse die App lokal starten
+  readme: README
+  disclosure: "Offenlegung gemäß § 25 Abs. 5 MedienG: Medieninhaber: Hans Czylok, Ottensheim, Österreich. Privates, nicht-kommerzielles Lernprojekt."
+  pick: Sprache wählen

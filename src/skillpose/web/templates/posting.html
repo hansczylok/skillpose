@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% from "_macros.html" import ai_attrs, ai_note %}
+{% block title %}{{ view.title }} – {{ t("postings.title") }} – {{ t("app.name") }}{% endblock %}
+{% block content %}
+<p>
+  {% if match_link %}<a href="{{ match_link }}">{{ t("posting.back_match") }}</a> · {% endif %}
+  <a href="/postings">{{ t("posting.back") }}</a>
+</p>
+<h1>{{ view.title }}</h1>
+<p class="meta">
+  <span class="mark {{ view.mark }}">{{ t("postings.status." ~ view.status) }}</span>
+  {% if view.error %}<span class="mark bad">{{ t("postings.failed") }}</span> {{ view.error }}{% endif %}
+  {# the demo store is made at start: its times would be the start of the app #}
+  {% if not demo %}· {{ t("posting.seen", time=fmt_time(view.created)) }}{% endif %}
+</p>
+{% if refs %}
+<p class="meta">{{ t("posting.refs") }}: {{ refs|join(", ") }}</p>
+{% endif %}
+
+<section>
+<h2>{{ t("posting.text_title") }}</h2>
+{% if original is none %}
+<div class="posting-text">{{ text }}</div>
+{% else %}
+{# the demo: a translation by Claude into the language of the page; the original below it is no model output #}
+<div class="translation ai-output" {{ ai_attrs(none) }}>
+{{ ai_note(t, "ai.translated") }}
+<div class="posting-text">{{ text }}</div>
+</div>
+<details class="original">
+<summary>{{ t("posting.show_original") }}</summary>
+<div class="posting-text" lang="{{ original_lang }}">{{ original }}</div>
+</details>
+{% endif %}
+</section>
+
+{% if analyzed %}
+<section class="ai-output" {{ ai_attrs(ai_model) }}>
+<h2>{{ t("posting.requirements") }}</h2>
+{{ ai_note(t) }}
+<dl class="facts">
+  <dt>{{ t("postings.col_role") }}</dt>
+  <dd>{{ view.role }}</dd>
+  <dt>{{ t("posting.seniority") }}</dt>
+  <dd>{{ t("seniority." ~ seniority) }}</dd>
+</dl>
+{% if requirements %}
+<p class="meta">{{ t("quotes.verbatim") }}</p>
+<ul class="skills">
+  {% for r in requirements %}
+  <li class="skill">
+    <div class="skill-head">
+      <strong>{{ r.name }}</strong>
+      <span class="mark">{{ t("matches." ~ r.importance) }}</span>
+    </div>
+    <p class="meta">
+      {{- t("kind." ~ r.kind) -}}
+      {%- if r.min_level %} · {{ t("posting.min_level", level=t("level." ~ r.min_level)) }}{% endif -%}
+      {%- if r.min_years %} · {{ t("posting.min_years", years=r.min_years) }}{% endif -%}
+    </p>
+    <p class="req-quote"><q>{{ r.quote }}</q></p>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="empty">{{ t("matches.no_requirements") }}</p>
+{% endif %}
+</section>
+{% else %}
+<section>
+<h2>{{ t("posting.requirements") }}</h2>
+<p class="empty">{{ t("posting.not_analyzed") }}</p>
+</section>
+{% endif %}
+{% endblock %}

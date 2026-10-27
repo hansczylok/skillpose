@@ -1,0 +1,597 @@
+# Texts of the pages (English). Same keys as de.yaml; {name} is filled in when shown.
+app:
+  name: skillpose
+  note: "A private, non-commercial learning project. Analyses use Claude (AI) by Anthropic: results can be wrong, please check them."
+
+ai:
+  generated: "Created by Claude (AI). It can contain errors. Compare it with the CV and the posting."
+  translated: "Translated by Claude (AI). It can contain errors."
+
+quotes:
+  verbatim: Quotes are verbatim, in the original language.
+
+nav:
+  main: Main navigation
+  cv: CV
+  start: Start
+  postings: Postings
+  costs: Costs
+  profile: Profile
+  matches: Matches
+  market: Market view
+  paths: Paths
+
+header:
+  mode: Mode
+  demo: Demo
+  own: Own data
+  month: Cost this month
+  language: Language
+
+taskline:
+  running: "running since {time}"
+  done: "finished {time}"
+  error: Error
+  waiting: "Waiting: {label}"
+
+task:
+  cv: Analyze CV
+  rematch: Recompute matches
+  postings: Analyze postings
+  collect: Collect and match batch
+  path: Build development path
+
+progress:
+  saving_results: Saving results
+  matching: "Matching with the CV: {done} of {total} checked"
+  saving_matches: Saving matches
+
+start:
+  cvs: CVs
+  none: No CV uploaded yet.
+  created: "uploaded {time}"
+  analyzed: analyzed
+  not_analyzed: not analyzed
+  upload: Upload a CV
+  file: "File: PDF, DOCX, TXT or MD, at most 5 MB"
+  upload_button: Upload
+  uploading: Uploading …
+  no_key: "No API key set: only the demo is available."
+  demo_persons: Demo persons (invented)
+  cv_de: CV in German
+  cv_en: CV in English
+
+hero:
+  where: Where do I stand?
+  whither: Which way do I go?
+  lead: Skills proven by quotes from the CV, compared with job postings, with gaps and development paths.
+  demo: View demo
+  own: Your own CV
+  own_hint: To analyze your own CV, run the app locally with your own Anthropic API key.
+  own_guide: Instructions in the README
+
+logo:
+  alt: "skillpose logo: two hands whose index fingers almost touch, with a spark between them"
+
+steps:
+  profile: Profile – position
+  matches: Matches – gaps
+  market: Market view – tiers
+  paths: Paths – orientation
+
+demo:
+  hint: "The demo shows fictional persons with finished results. It costs nothing."
+  missing: "Demo data missing: “skillpose demo build” creates them."
+
+blocked:
+  title: Not allowed
+  no_key: "No API key set: uploading and analyzing are disabled. Only the demo is available."
+
+error:
+  title: Error
+  not_found: This page does not exist.
+  invalid: The request is not valid.
+
+common:
+  back: Back to the start page
+
+role:
+  test_automation: Test automation
+  qa_management: QA management
+  rpa_process_automation: RPA and process automation
+  sap_test_consulting: SAP test consulting
+  business_analysis: Business analysis
+  data_analysis_bi: Data analysis and BI
+  data_engineering: Data engineering
+  data_science_ml: Data science and machine learning
+  ai_solutions_engineering: AI solutions engineering
+  software_development: Software development
+  it_project_management: IT project management
+  technical_sales: Technical sales
+  other: Other
+
+category:
+  tool: Tool
+  programming_language: Programming language
+  method: Method
+  domain: Domain
+  certificate: Certificate
+  degree: Degree
+  spoken_language: Language
+  soft: Soft skill
+  unknown: Other
+
+level:
+  basic: Basic
+  working: Working
+  strong: Strong
+  expert: Expert
+
+kind:
+  tool: Tool
+  experience: Experience
+  certificate: Certificate
+  degree: Degree
+  spoken_language: Language
+  soft: Soft skill
+  condition: Condition
+
+seniority:
+  junior: Junior
+  mid: Mid-level
+  senior: Senior
+  lead: Lead
+
+strength:
+  outcome: Outcome
+  activity: Activity
+  claim: Only named
+
+status:
+  met: met
+  partial: partial
+  gap: gap
+  unverifiable: not verifiable
+  unanswered: unanswered
+
+gap:
+  weeks: weeks
+  months: months
+  years: years of experience
+  certificate: certificate
+  degree: degree
+
+reason:
+  evidenced: evidenced
+  not_in_cv: not in the CV
+  only_listed: only listed, no evidence of use
+  last_used: "last used {year}"
+  level: "level {have}, {need} required"
+  years: "{have} of {need} years"
+  years_required: "{have} of {need} years required"
+  years_unknown: years of use unknown
+  related: "related: {id}"
+  higher_degree: "higher degree: {id}"
+  higher_degree_other_field: "higher degree, other field: {id}"
+  soft_unverifiable: "soft skill: not verifiable from a CV"
+  unanswered: not answered in the profile
+  no_question: the profile asks nothing about this condition
+  working_time_unknown: working time of the posting not recognised
+  travel_unknown: travel share of the posting not recognised
+  licence: "profile: driving licence B"
+  no_licence: "profile: no driving licence B"
+  travel: "profile: travel up to {have} %, posting asks {need} %"
+  shift_work: "profile: shift work"
+  no_shift_work: "profile: no shift work"
+  remote_only: "profile: exclusively from home"
+  not_remote_only: "profile: work on site is possible"
+  commute: "profile: commute up to {km} km"
+  full_time: "profile: full-time possible"
+  no_full_time: "profile: full-time not possible"
+  part_time: posting asks part-time
+
+notice:
+  saved: Saved.
+  deleted: CV deleted.
+  busy: Another task is running. Wait until it has finished, then try again.
+  queued: Queued – starts when the running task has finished.
+  delete_busy: A task for this CV is running. Delete the CV after it has finished.
+  cv_known: This CV is already here.
+  text_short: The text is too short to analyze. Nothing was saved.
+  text_long: The text is larger than 5 MB. Nothing was saved.
+  text_locked: "The text can no longer change: the profile was made from it."
+  text_busy: This CV is being analyzed, so the text cannot change now. Nothing was saved.
+  posting_new: Posting saved.
+  posting_known: This posting was already present. Nothing was changed.
+  uploaded: "{new} new, {present} already present, {skipped} skipped"
+  no_open: There are no open postings.
+  conditions_saved: "Saved. The matches of all CVs follow these answers; this makes no API call."
+
+upload:
+  missing: Choose a file first.
+  type: "unsupported file type {suffix} – use .pdf, .docx, .txt or .md"
+  size: file larger than 5 MB
+  text: "no readable text – scanned PDF? Export the CV as text-based PDF, DOCX or TXT."
+  broken: The file could not be read. Is the PDF or DOCX damaged?
+
+cost:
+  cents:
+    one: "about {count} cent"
+    other: "about {count} cents"
+  usd: "about {usd} USD"
+
+# a number with its noun; .one is the singular
+count:
+  postings:
+    one: "{count} posting"
+    other: "{count} postings"
+  skills:
+    one: "{count} skill"
+    other: "{count} skills"
+  stations:
+    one: "{count} position"
+    other: "{count} positions"
+  batches:
+    one: "{count} batch"
+    other: "{count} batches"
+  matches:
+    one: "{count} match"
+    other: "{count} matches"
+
+# pages of long lists
+paging:
+  per_page: Per page
+  range: "{noun} {first}–{last} of {total}"
+  noun_postings: Postings
+  noun_matches: Matches
+  nav: Pages
+  previous: Previous
+  next: Next
+  page: "Page {number}"
+  gap: "…"
+
+confirm:
+  title: Confirm
+  accept: "Yes, spend about {cost} USD"
+  cancel: Cancel
+
+cv:
+  text_title: Text of the CV
+  text_label: Text read from the file. Check it and correct errors.
+  chars:
+    one: "{count} character"
+    other: "{count} characters"
+  save_text: Save text
+  saving: Saving …
+  analyze: "Analyze ({cost})"
+  analyzing: Analyzing …
+  analyze_hint: The text is analyzed as it is saved. Save changes first.
+  privacy_hint: "When you analyse, this text goes to the Anthropic API (USA). First remove what the analysis does not need: address, phone, date of birth, family status, religion, health or disability information. skillpose does not read photos."
+  fixed: The profile was made from this text, so it can no longer change.
+  to_profile: Go to the profile
+  limit: "Monthly limit: {spent} of {limit} USD spent, this analysis costs about {cost} USD. Nothing was sent."
+  confirm_question: "This analysis costs about {cost} USD. That is more than the {threshold} USD that need your confirmation."
+  confirm_changed: The cost has changed since you were asked. Please confirm again.
+  cut_off: "The answer was too long and was cut off (limit {limit} tokens). Cost of the attempt: {usd} USD. Try again or shorten the CV."
+  refused: "Claude (AI) refused the analysis. Cost of the attempt: {usd} USD. Check the text and try again."
+
+delete:
+  summary: Delete this CV
+  short: Delete
+  warning: This deletes the CV with its profile, matches and paths. Postings stay. It cannot be undone.
+  button: Yes, delete for good
+  deleting: Deleting …
+
+profile:
+  created: "profile created {time}"
+  none: This CV has not been analyzed yet.
+  running: The analysis is running. This page updates itself.
+  to_analysis: Go to the text and start the analysis
+  no_skills: The profile has no skills.
+  years:
+    one: "{count} year"
+    other: "{count} years"
+  years_unknown: years of use unknown
+  last_used: "last used {year}"
+  no_evidence: no evidence
+  today: today
+  unverified: not found in the text
+  hidden: hidden
+  hide: Hide
+  show: Show
+  level: Level
+  save_level: Save level
+  saving: Saving …
+
+conditions:
+  title: Conditions
+  intro: "Postings name conditions such as a driving licence or travel. A CV cannot show them, so you answer them here, once. The answers apply to every CV and stay in your database; they never go to Claude. A field you leave empty counts as not answered; that condition is then not checked, unless the hint of the question says otherwise. A must condition that you do not meet is a knockout: the posting goes to tier 3."
+  intro_locked: "Postings name conditions such as a driving licence or travel. A CV cannot show them, so they are answered once in the profile, for every CV of the database. The answers never go to Claude. A must condition that is not met is a knockout: the posting goes to tier 3. Without an API key the answers can only be read."
+  unset: Not answered
+  answer_yes: "Yes"
+  answer_no: "No"
+  driving_licence_b: Do you have a driving licence B?
+  driving_licence_b_hint: "Yes: met. No: a posting that asks for it as a must is a knockout."
+  travel_share_max: Up to what share of your working time can you travel, in per cent?
+  travel_share_max_hint: "A whole number from 0 to 100; 0 means no travel. A posting that asks for more travel than you name, as a must, is a knockout. If it names no number at all, the app counts {default} %. If it names a number without a per cent sign (for example “2 days a week”), the app does not check the travel."
+  shift_work: Can you work in shifts?
+  shift_work_hint: "Yes: met. No: a posting that asks for shift work as a must is a knockout."
+  commute_km_max: How far can you commute to work at most, in kilometres?
+  commute_km_max_hint: "A whole number of kilometres. The app does not calculate distances yet. A number alone is enough: every place of work that a posting names then counts as met, unless you have to work exclusively from home. The number only appears as the reason at the posting."
+  remote_only: Do you have to work exclusively from home – never on site?
+  remote_only_hint: "Answer Yes only if you can never work on site. Yes: every place of work that a posting names (for example “location Linz”) is then not met. If it is a must, that is a knockout. No: work on site is possible, the place of work is met."
+  full_time: Can you work full-time?
+  full_time_hint: "Yes: met. No: a posting that asks for full-time as a must is a knockout. A posting that names part-time is always met."
+  notes: Notes
+  notes_hint: Only for you. Not used for matching, never sent to Claude.
+  up_to_travel_share_max: "up to {count} %"
+  up_to_commute_km_max: "up to {count} km"
+  save: Save answers
+  saving: Saving …
+  error_travel_share_max: Enter a whole number from 0 to 100.
+  error_commute_km_max: Enter a whole number of kilometres, 0 or more.
+  error_notes: "At most {limit} characters."
+  key:
+    driving_licence_b: Driving licence B
+    travel: Travel
+    shift_work: Shift work
+    location: Place of work
+    working_time: Working time
+
+taskdone:
+  cv: "Profile ready: {skills}, {postings} matched"
+  rematch: "Matches recomputed: {postings}"
+  conditions: "Matches recomputed with your answers: {matches}"
+  postings: "Postings analyzed: {done}, still open: {left}"
+  nothing_open: No open postings.
+  recount: "Nothing was sent: there are {now} open postings now, {asked} when you started. Start the analysis again."
+  batch: "Batch submitted: {postings} at half price. This page collects the result by itself."
+  batches: "{postings} sent in {batches} at half price. This page collects the results by itself."
+  split: "{analyzed} analyzed, {sent} sent in {batches} at half price."
+  limit:
+    one: "Monthly limit reached – {count} posting stays open"
+    other: "Monthly limit reached – {count} postings stay open"
+  match_limit: "Monthly limit reached – the matches are not up to date."
+  collect: "Batch collected – analyzed: {done}, without result: {failed}"
+  collect_partly: "Batch collected – analyzed: {done}, without result: {failed}; the page checks the other batches again on the next visit (error: {error})"
+  path: "Path for {role} ready (steps: {steps}, total weeks: {weeks})"
+
+postings:
+  title: Postings
+  intro: Paste or upload job postings. Then Claude reads them and compares them with your CV.
+  list_title: All postings
+  none: No postings yet.
+  col_title: Posting
+  col_role: Role family
+  col_status: Status
+  col_seen: Seen on
+  failed: failed
+  status:
+    analyzed: analyzed
+    open: open
+    batch: in batch
+  batch_running:
+    one: "Batch running – status is checked every 30 s"
+    other: "{count} batches running – status is checked every 30 s"
+  batch_progress: "Batch running: {done} of {total} done (as of {time})"
+  batch_progress_of: "Batch {number} of {batches}: {done} of {total} done (as of {time})"
+  batch_waiting_of: "Batch {number} of {batches}: no status yet"
+  batch_failed: "{failed} failed"
+  paste_title: Paste text
+  paste_text: Text of the posting
+  paste_ref: "Name (optional; the first line is used otherwise)"
+  paste_button: Save posting
+  pasting: Saving …
+  paste_empty: Paste the text of a posting first.
+  too_long: "Skipped “{ref}”: {chars} characters, at most {limit} are allowed."
+  upload_title: Upload files
+  upload_label: "Files: MD, TXT, JSON or CSV, each at most 5 MB, together at most 6 MB"
+  upload_hint: "JSON: a list of objects with “text” and “ref”. CSV: a header row with the column “text” and, optionally, “ref”."
+  upload_button: Upload
+  uploading: Uploading …
+  upload_missing: Choose at least one file first.
+  upload_type: "{name}: file type {suffix} is not supported – use .md, .txt, .json or .csv. Nothing was stored from this file."
+  upload_size: "{name}: file larger than 5 MB. Nothing was stored from this file."
+  upload_format: "{name}: the file could not be read ({detail}). JSON needs a list of objects with “text”. CSV needs a header row with the column “text”. Nothing was stored from this file."
+  upload_structure: unexpected structure
+  analyze_title: Analyze
+  analyze: "Analyze open ({count}, {cost}; from {threshold}: the first at once, the rest in batches at half price)"
+  analyzing: Analyzing …
+  nothing_open: No open postings.
+  limit: "Monthly limit: {spent} of {limit} USD spent, this analysis costs about {cost} USD. Nothing was sent."
+  confirm_question: "Open postings: {count}. This analysis costs about {cost} USD. That is more than the {threshold} USD that need your confirmation."
+  confirm_changed: The number of open postings has changed since you were asked. Please confirm again.
+
+posting:
+  back: Back to the postings
+  back_match: Back to the match
+  seen: "Seen on {time}"
+  refs: Sources
+  text_title: Full text
+  requirements: Recognized requirements
+  seniority: Seniority
+  min_level: "Minimum level: {level}"
+  min_years: "Minimum years: {years}"
+  not_analyzed: This posting is not analyzed yet. The requirements Claude reads from it appear here after the analysis.
+  show_original: Show original
+  translated_note: "Demo: Claude (AI) translated the postings into the language of the interface. The original is on the page of each posting."
+
+tier:
+  fits: "1 · fits"
+  learnable: "2 · learnable"
+  big_gap: "3 · big gap"
+  none: "– · too few postings"
+  help_title: What do the tiers mean?
+  help_best: 1 is best.
+  help_1: "Tier 1 – fits well: at least {tier1_pct} % of the must requirements are met (partly met counts half), no gap in years of experience or degree, and no must condition that your answers do not meet."
+  help_2: "Tier 2 – gaps can be learned: no gap in years of experience or degree and no must condition that your answers do not meet; all missing must requirements together can be learned in at most {weeks} weeks."
+  help_3: "Tier 3 – big gap: otherwise, for example missing years of experience, a missing degree, or more than {weeks} weeks."
+  help_role:
+    one: "Tier of a role: the best tier that at least {share} % of its postings reach; a role needs at least {count} posting."
+    other: "Tier of a role: the best tier that at least {share} % of its postings reach; a role needs at least {count} postings."
+
+matches:
+  intro: How well the postings fit this CV. A click on a title shows every requirement.
+  no_profile: This CV has not been analyzed yet.
+  none: No matches yet. Analyze postings first.
+  to_postings: Go to the postings
+  col_title: Posting
+  col_role: Role family
+  col_tier: Tier
+  col_must: Must
+  col_nice: Nice to have
+  col_gaps: Main gaps
+  dash_hint: "A dash under “Nice to have” means: the posting names no must or no nice requirement."
+  back: Back to the matches
+  show_posting: Show the full posting
+  requirements: Requirements
+  no_requirements: No requirements were read from this posting.
+  must: must
+  nice: nice to have
+  gap_type: Gap
+  weeks:
+    one: "about {count} week"
+    other: "about {count} weeks"
+  cv_quote: In the CV
+  posting_quote: In the posting
+  no_evidence: no evidence in the CV
+  reason: Reason
+  not_verifiable: Not verifiable from the CV
+  not_verifiable_hint: A CV cannot prove soft skills. They count in no coverage and no tier.
+  conditions: Conditions
+  conditions_hint: "Checked against your answers in the profile. A must condition that you do not meet puts the posting in tier 3. The app does not check distances yet."
+  change_answers: Change your answers
+  see_answers: See the answers
+  condition_met: met
+  condition_gap: not met
+  condition_unanswered: unanswered
+
+step:
+  cv: Read CV
+  job: Read postings
+  relation: Related skills
+  path: Development paths
+
+market:
+  intro: How this CV fits the postings of each role family.
+  coverage: Median must coverage
+  gaps_title: Most frequent gaps
+  no_gaps: No gaps.
+  gap_type: Gap type
+  in_postings: "Postings: {count}"
+  legend_bars: A bar shows the weight of a gap compared with the largest gap of the same role. A missing must requirement counts double.
+  blocked_title: Blocked by conditions
+  blocked_hint: These must conditions of the postings do not fit your answers. They are no gaps that you can learn.
+
+stability:
+  note: "Two analyses of the same CV: {level_same} % of the skill levels the same, role tiers the same in {role_tier_same} % (measured with {runs} runs on the gold set, roles with at least {min_jobs} postings)."
+  rules_before: "Measured with the rules for matches and tiers and the step-2 prompt before {date}."
+
+paths:
+  intro: A path lists steps that close the most frequent gaps of a role. It names activities and proofs, no courses and no links.
+  no_tier: "No role has enough postings for a tier yet (at least {count}). Add more postings of these roles."
+  no_path_yet: No path is possible yet. The reasons are below.
+  without_title: Roles without a path
+  without_few: "{role}: {count} of {min} postings – no tier yet, so no path. Add more postings of this role."
+  without_other:
+    one: "Other roles: {count} posting – they fit no target role, so no path."
+    other: "Other roles: {count} postings – they fit no target role, so no path."
+  without_gaps: "{role}: no gaps – no path needed."
+  none: There is no path for this role yet.
+  create: "Create path ({cost})"
+  recreate: "Create again ({cost})"
+  creating: Creating the path …
+  created: "created {time}"
+  closes: Closes
+  proof: Proof
+  total: Total
+  week: 1 week
+  weeks: "{weeks} weeks"
+  inputs_same: Profile and market view are unchanged since this path was made.
+  inputs_changed: Profile or market view have changed since this path was made. A new path would fit better.
+  only_de: This path exists only in German.
+  only_en: This path exists only in English.
+  too_little:
+    one: "too little data (at least {count} posting)"
+    other: "too little data (at least {count} postings)"
+  no_gaps: no gaps – no path needed
+  limit: "Monthly limit: {spent} of {limit} USD spent, this path costs about {cost} USD. Nothing was sent."
+  confirm_question: "The path for {role} costs about {cost} USD. That is more than the {threshold} USD that need your confirmation."
+  failed: "The path for {role} could not be created: {reason}"
+  cut_off: "The answer was too long and was cut off (limit {limit} tokens). Cost of the attempt: {usd} USD. Try again."
+  refused: "Claude (AI) refused the request. Cost of the attempt: {usd} USD. Try again."
+
+costs:
+  prompt_set: "Prompts: {label}"
+  month_title: This month
+  spent: Spent this month
+  limit: Monthly limit
+  rest: Left this month
+  cache: Share of cache reads
+  steps_month: Per step this month
+  steps_all: Per step
+  means_title: Average per call (all calls so far)
+  means_title_demo: Average per call (building the demo)
+  means_note: Measured in this installation; the figures in the README are a snapshot.
+  means_note_demo: Measured when building the demo; the figures in the README are a snapshot.
+  mode_batch: Batch
+  mode_single: single
+  col_mode: Mode
+  col_mean: Mean USD
+  calls_title: "Last {count} calls"
+  no_calls: No calls yet.
+  no_calls_month: There were no calls this month.
+  col_step: Step
+  col_calls: Calls
+  col_usd: USD
+  col_cache: Cache reads
+  col_time: Time
+  col_model: Model
+  col_in: Tokens in
+  col_out: Tokens out
+  col_write: Cache write
+  col_read: Cache read
+  col_batch: Batch
+  batch_yes: "yes"
+  batch_no: "no"
+  demo_title: Demo
+  demo_hint: These numbers show what building the demo cost. The demo itself costs nothing.
+  demo_total: "Cost of building the demo: {usd} USD"
+
+export:
+  button: Export as Markdown
+  hint: The file contains content of your CV.
+  no_profile: This CV has not been analyzed yet. There is nothing to export.
+  title: "skillpose – {name} – export {date}"
+  title_all: "skillpose – export {date}"
+  privacy: "Private: This file contains content of your CV. Keep it private: do not publish it, do not commit it."
+  tiers_title: Tiers
+  tier_words: "In this file the tiers are called {words}."
+  cv_heading: "CV {id}: {name}"
+  cv_label: "CV {id} ({name})"
+  overview_title: Overview
+  uploaded: "Uploaded: {time} UTC"
+  text_length: "Text: {length}"
+  profile_counts: "Profile: {skills}, {stations}"
+  skills_hidden: "{count} hidden"
+  levels: "Levels of the skills: {levels}"
+  skills_title: Skills
+  col_skill: Skill
+  col_years: Years
+  col_last_used: Last used
+  col_evidence: Evidence
+  col_quote: Strongest quote
+  col_gaps: Most frequent gaps (postings)
+  col_open: Open must requirements
+  col_not_verifiable: Not verifiable from the CV
+  blocked_title: "Blocked by conditions (must conditions that the answers in the profile do not meet):"
+  compare_title: Comparison of the CVs
+  only_in: "Only in {cv}: {skills}"
+  other_level: "Different levels: {skills}"
+  level_in: "CV {id}: {level}"
+
+site:
+  note: Static demo with invented data – to analyze your own CV, run the app locally
+  readme: README
+  disclosure: "Offenlegung gemäß § 25 Abs. 5 MedienG: Medieninhaber: Hans Czylok, Ottensheim, Österreich. Privates, nicht-kommerzielles Lernprojekt."
+  pick: Choose a language

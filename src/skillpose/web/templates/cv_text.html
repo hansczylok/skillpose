@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% from "_macros.html" import notice_box %}
+{% block title %}{{ name }} – {{ t("cv.text_title") }} – {{ t("app.name") }}{% endblock %}
+{% block content %}
+<h1>{{ name }}</h1>
+{% if not demo %}<p class="meta">{{ t("start.created", time=fmt_time(cv.created)) }}</p>{% endif %}
+{{ notice_box(notice, ("cv_known",)) }}
+<h2>{{ t("cv.text_title") }}</h2>
+
+{% if cv.analyzed or locked %}
+<div class="card">
+  {% if cv.analyzed %}
+  <p class="hint">{{ t("cv.fixed") }} <a href="/cv/{{ cv_id }}">{{ t("cv.to_profile") }}</a></p>
+  {% endif %}
+  <textarea id="cv-text" rows="20" readonly aria-label="{{ t("cv.text_title") }}">
+{{ text }}</textarea>
+  <p class="meta">{{ t("cv.chars", count=chars) }}</p>
+  {{ notice_box(notice, ("text_locked",)) }}
+  {% if not has_key %}
+  <p class="hint">{{ t("start.no_key") }}</p>
+  {% endif %}
+</div>
+{% else %}
+<p class="privacy-hint" role="note">{{ t("cv.privacy_hint") }}</p>
+<form class="card" method="post" action="/cv/{{ cv_id }}/text" data-busy="{{ t("cv.saving") }}">
+  <label for="cv-text">{{ t("cv.text_label") }}</label>
+  <textarea id="cv-text" name="text" rows="20" required>
+{{ text }}</textarea>
+  <p class="meta">{{ t("cv.chars", count=chars) }}</p>
+  {{ notice_box(notice, ("saved", "text_short", "text_long", "text_locked", "text_busy")) }}
+  <button type="submit">{{ t("cv.save_text") }}</button>
+</form>
+
+<form class="card" method="post" action="/cv/{{ cv_id }}/analyze" data-busy="{{ t("cv.analyzing") }}">
+  <p class="hint">{{ t("cv.analyze_hint") }}</p>
+  <button type="submit">{{ t("cv.analyze", cost=cost_label) }}</button>
+  {% if analyze_error %}
+  <p class="msg error" role="alert">{{ analyze_error }}</p>
+  {% endif %}
+  {{ notice_box(notice, ("busy",)) }}
+</form>
+{% endif %}
+
+{% include "_cv_delete.html" %}
+{% endblock %}

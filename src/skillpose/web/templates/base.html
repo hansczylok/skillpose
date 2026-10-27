@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+{% if task and task.finished is none and refresh %}
+<meta http-equiv="refresh" content="3">
+{% endif %}
+<title>{% block title %}{{ t("app.name") }}{% endblock %}</title>
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
+<link rel="stylesheet" href="/static/style.css">
+<script src="/static/app.js" defer></script>
+</head>
+<body{% if refresh_after %} data-refresh="{{ refresh_after }}"{% endif %}>
+{% set path = request.url.path %}
+<header class="top">
+  <a class="brand" href="/" aria-label="{{ t("app.name") }}">
+    <img src="/static/icon.svg" alt="" width="28" height="28">
+    <span class="wordmark">skill<svg viewBox="108 50 24 24" aria-hidden="true" focusable="false"><path d="M120,50 Q122,60 132,62 Q122,64 120,74 Q118,64 108,62 Q118,60 120,50 Z"/></svg>pose</span>
+  </a>
+  <span class="mode {{ 'mode-demo' if demo else 'mode-own' }}" title="{{ t("header.mode") }}">
+    {{- t("header.demo") if demo else t("header.own") -}}
+  </span>
+  {% if has_key %}
+  <span class="cost">{{ t("header.month") }}: {{ usd(month_usd) }} / {{ usd(limit_usd) }} USD</span>
+  {% endif %}
+  <nav class="langs" aria-label="{{ t("header.language") }}">
+    {% for code in langs %}
+    <a href="/lang/{{ code }}?next={{ next_path|urlencode }}" hreflang="{{ code }}"
+       {%- if code == lang %} aria-current="true"{% endif %}>{{ code|upper }}</a>
+    {% endfor %}
+  </nav>
+</header>
+<nav class="main" aria-label="{{ t("nav.main") }}">
+  <a href="/"{% if path == "/" %} aria-current="page"{% endif %}>{{ t("nav.start") }}</a>
+  <a href="/postings"{% if path.startswith("/postings") %} aria-current="page"{% endif %}>{{ t("nav.postings") }}</a>
+  <a href="/costs"{% if path.startswith("/costs") %} aria-current="page"{% endif %}>{{ t("nav.costs") }}</a>
+</nav>
+{% if cv_id %}
+{% set cv_base = "/cv/" ~ cv_id %}
+<nav class="sub" aria-label="{{ t("nav.cv") }}">
+  <a href="{{ cv_base }}"{% if path == cv_base %} aria-current="page"{% endif %}>{{ t("nav.profile") }}</a>
+  <a href="{{ cv_base }}/matches"{% if path.startswith(cv_base ~ "/matches") %} aria-current="page"{% endif %}>{{ t("nav.matches") }}</a>
+  <a href="{{ cv_base }}/market"{% if path.startswith(cv_base ~ "/market") %} aria-current="page"{% endif %}>{{ t("nav.market") }}</a>
+  <a href="{{ cv_base }}/paths"{% if path.startswith(cv_base ~ "/paths") %} aria-current="page"{% endif %}>{{ t("nav.paths") }}</a>
+</nav>
+{% endif %}
+{% if task %}
+{% set label = t("task." ~ task.name) %}
+{% set state = "running" if task.finished is none else ("ok" if task.ok else "error") %}
+<p class="task {{ state }}" role="status">
+  {% if state == "running" %}
+  {{ t("taskline.running", time=fmt_time(task.started, "%H:%M")) }}:
+  {% else %}
+  {{ t("taskline.done", time=fmt_time(task.finished, "%H:%M")) }}:
+  {% endif %}
+  {# on the page of the task a link would only jump to the same page (a running task refreshes it anyway) #}
+  {% if task.target.startswith("/") and not task.target.startswith("//") and request.url.path != task.target %}
+  <a href="{{ task.target }}">{{ label }}</a>
+  {%- else %}
+  {{ label }}
+  {%- endif %}
+  {%- if state == "running" and task.progress %}: {{ task.progress }}{% endif %}
+  {% if state == "error" %} – {{ t("taskline.error") }}: {{ task.message }}{% elif task.message %} – {{ task.message }}{% endif %}
+</p>
+{% endif %}
+{% if waiting %}
+<ul class="waiting">
+  {% for w in waiting %}
+  <li>{{ t("taskline.waiting", label=t("task." ~ w.name)) }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+<main>
+{% block content %}{% endblock %}
+</main>
+<footer>{{ t("app.note") }}</footer>
+</body>
+</html>

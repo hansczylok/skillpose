@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% from "_macros.html" import notice_box, ai_attrs, ai_note, tier_badge %}
+{% block title %}{{ name }} – {{ t("nav.paths") }} – {{ t("app.name") }}{% endblock %}
+{% block content %}
+{% macro weeks(n) %}{{ t("paths.week") if n == 1 else t("paths.weeks", weeks=n) }}{% endmacro %}
+{# The roles that get no path, one line each with the reason (pages_market.NoPathView). #}
+{% macro without_path_list() %}
+{% if without_path %}
+<section class="no-path" aria-labelledby="no-path-title">
+  <h2 id="no-path-title">{{ t("paths.without_title") }}</h2>
+  <ul class="list">
+    {% for r in without_path %}
+    <li>
+      {%- if r.reason == "other" %}{{ t("paths.without_other", count=r.postings) }}
+      {%- elif r.reason == "no_gaps" %}{{ t("paths.without_gaps", role=r.label) }}
+      {%- else %}{{ t("paths.without_few", role=r.label, count=r.postings, min=min_jobs) }}
+      {%- endif -%}
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+{% endmacro %}
+{% set own_task = task and task.target == "/cv/" ~ cv_id ~ "/paths" %}
+<h1>{{ name }}</h1>
+{% if not has_key %}
+<p class="hint">{{ t("blocked.no_key") }}</p>
+{% endif %}
+
+{% if own_task and task.finished %}
+<p class="msg {{ 'ok' if task.ok else 'error' }}" role="{{ 'status' if task.ok else 'alert' }}">
+  {% if not task.ok %}{{ t("taskline.error") }}: {% endif %}{{ task.message }}
+  <span class="meta">({{ fmt_time(task.finished) }})</span>
+</p>
+{% endif %}
+{% for text in orphans %}
+<p class="msg error" role="alert">{{ text }}</p>
+{% endfor %}
+
+{% if not cv.analyzed %}
+<p class="empty">{{ t("matches.no_profile") }} <a href="/cv/{{ cv_id }}/text">{{ t("profile.to_analysis") }}</a></p>
+{% elif not families %}
+<p class="empty">{{ t("paths.no_tier", count=min_jobs) if not any_tier else t("paths.no_path_yet") }} <a href="/postings">{{ t("matches.to_postings") }}</a></p>
+{{ without_path_list() }}
+{% else %}
+<p class="meta">{{ t("paths.intro") }}</p>
+{% for f in families %}
+{% set p = f.path %}
+<section class="family" id="family-{{ f.family }}">
+  <h2>
+    {{ f.label }}
+    {{ tier_badge(t, f.tier) }}
+  </h2>
+  {% if p %}
+  {% if p.created %}
+  <p class="meta">{{ t("paths.created", time=fmt_time(p.created)) }}</p>
+  {% endif %}
+  {% if p.only_in %}
+  <p class="hint">{{ t("paths.only_de") if p.only_in == "de" else t("paths.only_en") }}</p>
+  {% endif %}
+  <div class="ai-output" {{ ai_attrs(p.model) }}>
+  {{ ai_note(t) }}
+  {% if p.rationale %}
+  <p>{{ p.rationale }}</p>
+  {% endif %}
+  <ol class="steps">
+    {% for s in p.steps %}
+    <li class="step">
+      {% if s.activity %}
+      <p class="activity">{{ s.activity }}</p>
+      {% endif %}
+      <p class="meta">{% if s.closes %}{{ t("paths.closes") }}: {{ s.closes|join(", ") }} · {% endif %}{{ weeks(s.weeks) }}</p>
+      {% if s.proof %}
+      <p><strong>{{ t("paths.proof") }}:</strong> {{ s.proof }}</p>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ol>
+  <p class="total"><strong>{{ t("paths.total") }}:</strong> {{ weeks(p.total_weeks) }}</p>
+  </div>
+  {% if not locked %}
+  <p class="hint">{{ t("paths.inputs_changed") if p.changed else t("paths.inputs_same") }}</p>
+  {% endif %}
+  {% endif %}
+  {% if not locked %}
+  <form class="path-action" method="post" action="/cv/{{ cv_id }}/paths/{{ f.family|urlencode }}" data-busy="{{ t("paths.creating") }}">
+    {% if p and not p.only_in %}
+    <input type="hidden" name="force" value="1">
+    <button type="submit" class="secondary">{{ t("paths.recreate", cost=cost_label) }}</button>
+    {% else %}
+    <button type="submit">{{ t("paths.create", cost=cost_label) }}</button>
+    {% endif %}
+    {% if errors[f.family] %}
+    <p class="msg error" role="alert">{{ errors[f.family] }}</p>
+    {% endif %}
+    {% if notice_family == f.family %}
+    {{ notice_box(notice, ("busy", "queued")) }}
+    {% endif %}
+  </form>
+  {% elif not p %}
+  <p class="empty">{{ t("paths.none") }}</p>
+  {% endif %}
+</section>
+{% endfor %}
+{{ without_path_list() }}
+{% endif %}
+{% endblock %}

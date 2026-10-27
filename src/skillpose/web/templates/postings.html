@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% from "_macros.html" import notice_box, pager %}
+{% block title %}{{ t("postings.title") }} – {{ t("app.name") }}{% endblock %}
+{% block content %}
+{% set own_task = task and task.target == "/postings" %}
+<h1>{{ t("postings.title") }}</h1>
+<p class="intro">{{ t("postings.intro") }}</p>
+{% if batch_lines %}
+<p class="msg" role="status">
+  {% for line in batch_lines %}
+  {{ line }}{% if not loop.last %}<br>{% endif %}
+  {% endfor %}
+</p>
+{% endif %}
+{% if not has_key %}
+<p class="hint">{{ t("start.no_key") }}</p>
+{% endif %}
+
+{% if not locked %}
+<section aria-labelledby="paste-title">
+  <h2 id="paste-title">{{ t("postings.paste_title") }}</h2>
+  <form class="card" method="post" action="/postings/text" data-busy="{{ t("postings.pasting") }}">
+    <label for="posting-text">{{ t("postings.paste_text") }}</label>
+    <textarea id="posting-text" name="text" rows="8" required>
+{{ paste_text }}</textarea>
+    <label for="posting-ref">{{ t("postings.paste_ref") }}</label>
+    <input id="posting-ref" type="text" name="ref" value="{{ paste_ref }}" maxlength="120">
+    {% if paste_error %}
+    <p class="msg error" role="alert">{{ paste_error }}</p>
+    {% endif %}
+    {{ notice_box(notice, ("posting_new", "posting_known")) }}
+    <button type="submit">{{ t("postings.paste_button") }}</button>
+  </form>
+</section>
+
+<section aria-labelledby="upload-title">
+  <h2 id="upload-title">{{ t("postings.upload_title") }}</h2>
+  <form class="card" method="post" action="/postings/upload" enctype="multipart/form-data" data-busy="{{ t("postings.uploading") }}">
+    <label for="posting-files">{{ t("postings.upload_label") }}</label>
+    <input id="posting-files" type="file" name="files" accept=".md,.txt,.json,.csv" multiple required>
+    <p class="hint">{{ t("postings.upload_hint") }}</p>
+    {{ notice_box(notice, ("uploaded",)) }}
+    {% if upload_problems %}
+    <div class="msg error" role="alert">
+      <ul>
+        {% for problem in upload_problems %}
+        <li>{{ problem }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+    <button type="submit">{{ t("postings.upload_button") }}</button>
+  </form>
+</section>
+{% endif %}
+
+<section aria-labelledby="analyze-title">
+  <h2 id="analyze-title">{{ t("postings.analyze_title") }}</h2>
+  {% if own_task and task.finished and (task.message or not task.ok) %}
+  <p class="msg {{ 'ok' if task.ok else 'error' }}" role="{{ 'status' if task.ok else 'alert' }}">
+    {% if not task.ok %}{{ t("taskline.error") }}: {% endif %}{{ task.message }}
+    <span class="meta">({{ fmt_time(task.finished) }})</span>
+  </p>
+  {% endif %}
+  {% if not locked and open_count %}
+  <form class="card" method="post" action="/postings/analyze" data-busy="{{ t("postings.analyzing") }}">
+    <button type="submit">{{ t("postings.analyze", count=open_count, cost=cost_label, threshold=threshold) }}</button>
+    {% if analyze_error %}
+    <p class="msg error" role="alert">{{ analyze_error }}</p>
+    {% endif %}
+    {{ notice_box(notice, ("busy", "queued", "no_open")) }}
+  </form>
+  {% elif not locked %}
+  <p class="empty">{{ t("postings.nothing_open") }}</p>
+  {{ notice_box(notice, ("busy", "queued", "no_open")) }}
+  {% endif %}
+</section>
+
+<section aria-labelledby="list-title">
+  <h2 id="list-title">{{ t("postings.list_title") }} <span class="meta">({{ t("count.postings", count=page.total) }})</span></h2>
+  {% if rows %}
+  {{ pager(t, page, "postings") }}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">{{ t("postings.col_title") }}</th>
+          <th scope="col">{{ t("postings.col_role") }}</th>
+          <th scope="col">{{ t("postings.col_status") }}</th>
+          {# the demo store is made at start: its times would be the start of the app #}
+          {% if not demo %}<th scope="col">{{ t("postings.col_seen") }}</th>{% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr id="posting-{{ row.hash }}">
+          <td>
+            <a href="/postings/{{ row.hash }}">{{ row.title }}</a>
+            {% if row.ref %}<br><span class="meta">{{ row.ref }}</span>{% endif %}
+          </td>
+          <td>{{ row.role or "" }}</td>
+          <td>
+            <span class="mark {{ row.mark }}">{{ t("postings.status." ~ row.status) }}</span>
+            {% if row.error %}
+            <br><span class="mark bad">{{ t("postings.failed") }}</span> <span class="meta">{{ row.error }}</span>
+            {% endif %}
+          </td>
+          {% if not demo %}<td>{{ fmt_time(row.created) }}</td>{% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {{ pager(t, page, "postings", bottom=true) }}
+  {% if rows|selectattr("translated")|first %}
+  <p class="hint">{{ t("posting.translated_note") }}</p>
+  {% endif %}
+  {% else %}
+  <p class="empty">{{ t("postings.none") }}</p>
+  {% endif %}
+</section>
+{% endblock %}

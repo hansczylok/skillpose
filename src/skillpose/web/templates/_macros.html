@@ -1,0 +1,76 @@
+{# A notice (deps.Notice) next to the place it belongs to; shown only for the keys the place is for. #}
+{% macro notice_box(notice, keys) %}
+{% if notice and notice.key in keys %}
+<p class="msg {{ notice.kind }}" role="{{ 'alert' if notice.kind == 'error' else 'status' }}">{{ notice.text }}</p>
+{% endif %}
+{% endmacro %}
+
+{# What Claude wrote, marked for people (the note) and for machines (the attributes on the enclosing element).
+   model: the stored model name, none in the demo. #}
+{% macro ai_attrs(model) %}data-ai-generated="true"{% if model %} data-ai-model="{{ model }}"{% endif %}{% endmacro %}
+{% macro ai_note(t, key="ai.generated") %}<p class="ai-note">{{ t(key) }}</p>{% endmacro %}
+
+{# A bar as plain HTML and CSS; value: whole per cent. The CSP allows the inline width, no script is needed. #}
+{% macro bar(value) %}<span class="bar" aria-hidden="true"><span style="width: {{ value }}%"></span></span>{% endmacro %}
+
+{# The tier of a posting or of a role family: number, word and colour. The number and the word carry the meaning, the
+   colour is extra. tier: 1 to 3, or none for a role with too few postings to get one. #}
+{% macro tier_badge(t, tier) %}
+{% if tier %}<span class="mark tier-{{ tier }}">{{ t("tier." ~ {1: "fits", 2: "learnable", 3: "big_gap"}[tier]) }}</span>{% else %}<span class="mark tier-none">{{ t("tier.none") }}</span>{% endif %}
+{% endmacro %}
+
+{# What the tiers mean, closed until it is opened; rules: the numbers of the settings (labels.tier_rules). #}
+{% macro tier_help(t, rules) %}
+<details class="tier-help">
+  <summary>{{ t("tier.help_title") }}</summary>
+  <p><strong>{{ t("tier.help_best") }}</strong></p>
+  <ul>
+    <li class="tier-help-1">{{ t("tier.help_1", **rules) }}</li>
+    <li class="tier-help-2">{{ t("tier.help_2", **rules) }}</li>
+    <li class="tier-help-3">{{ t("tier.help_3", **rules) }}</li>
+    <li>{{ t("tier.help_role", **rules) }}</li>
+  </ul>
+</details>
+{% endmacro %}
+
+{# How much two analyses of the same CV differ (labels.stability_note); nothing when it was not measured. #}
+{% macro stability_box(text) %}
+{% if text %}<p class="meta stability-note">{{ text }}</p>{% endif %}
+{% endmacro %}
+
+{# A coverage in per cent as a bar and a number; a dash when the posting names no requirement of this kind. #}
+{% macro coverage(value) %}
+{% if value is none %}–{% else %}{{ bar(value) }}{{ value }} %{% endif %}
+{% endmacro %}
+
+{# The size buttons, the range ("Postings 31–60 of 78") and the page links of a long list (paging.Page); noun: the key
+   of the word for the items. bottom: only the page links. The sizes show from more than the smallest size, the range and the links only with more
+   than one page. #}
+{% macro pager(t, page, noun, bottom=false) %}
+{% if page.show_sizes and not bottom %}
+<div class="pager">
+  <span class="pager-sizes">
+    <span id="per-label-{{ noun }}">{{ t("paging.per_page") }}</span>
+    <span role="group" aria-labelledby="per-label-{{ noun }}">
+      {% for size in page.sizes %}
+      <a class="button secondary pager-size" href="{{ page.href(per=size) }}"{% if size == page.per %} aria-current="true"{% endif %}>{{ size }}</a>
+      {% endfor %}
+    </span>
+  </span>
+  {% if page.show_nav %}
+  <span class="meta pager-range">{{ t("paging.range", noun=t("paging.noun_" ~ noun), first=page.first, last=page.last, total=page.total) }}</span>
+  {% endif %}
+</div>
+{% endif %}
+{% if page.show_sizes and bottom and page.show_nav %}
+<nav class="pager-pages" aria-label="{{ t('paging.nav') }}">
+  {% if page.number > 1 %}<a href="{{ page.href(page=page.number - 1) }}" rel="prev">{{ t("paging.previous") }}</a>{% endif %}
+  {% for n in page.numbers %}
+  {% if n is none %}<span class="pager-gap" aria-hidden="true">{{ t("paging.gap") }}</span>
+  {% elif n == page.number %}<a href="{{ page.href(page=n) }}" aria-current="page" aria-label="{{ t('paging.page', number=n) }}">{{ n }}</a>
+  {% else %}<a href="{{ page.href(page=n) }}" aria-label="{{ t('paging.page', number=n) }}">{{ n }}</a>{% endif %}
+  {% endfor %}
+  {% if page.number < page.pages %}<a href="{{ page.href(page=page.number + 1) }}" rel="next">{{ t("paging.next") }}</a>{% endif %}
+</nav>
+{% endif %}
+{% endmacro %}

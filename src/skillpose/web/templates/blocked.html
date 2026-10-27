@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}{{ t("blocked.title") }} – {{ t("app.name") }}{% endblock %}
+{% block content %}
+<h1>{{ t("blocked.title") }}</h1>
+<p class="msg error" role="alert">{{ message }}</p>
+<p><a href="/">{{ t("common.back") }}</a></p>
+{% endblock %}

@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% from "_macros.html" import notice_box, ai_attrs, ai_note, stability_box %}
+{% block title %}{{ name }} – {{ t("nav.profile") }} – {{ t("app.name") }}{% endblock %}
+{% block content %}
+{% set own_task = task and task.target == "/cv/" ~ cv_id %}
+<h1>{{ name }}</h1>
+<p class="meta">
+  {% if created %}{{ t("profile.created", time=fmt_time(created)) }} · {% endif %}
+  <a href="/cv/{{ cv_id }}/text">{{ t("cv.text_title") }}</a>
+</p>
+{% if profile %}
+<p class="export">
+  <a class="button secondary" href="/cv/{{ cv_id }}/export.md?lang={{ lang }}" download>{{ t("export.button") }}</a>
+  <span class="meta">{{ t("export.hint") }}</span>
+</p>
+{% endif %}
+{% if not has_key %}
+<p class="hint">{{ t("blocked.no_key") }}</p>
+{% endif %}
+
+{% if not notice_skill and not notice_form %}
+{{ notice_box(notice, ("queued", "cv_known")) }}
+{% endif %}
+{% if own_task and task.finished %}
+<p class="msg {{ 'ok' if task.ok else 'error' }}" role="{{ 'status' if task.ok else 'alert' }}">
+  {% if not task.ok %}{{ t("taskline.error") }}: {% endif %}{{ task.message }}
+  <span class="meta">({{ fmt_time(task.finished) }})</span>
+</p>
+{% endif %}
+
+{% if not profile %}
+  {% if own_task and not task.finished %}
+  <p class="msg" role="status">{{ t("profile.running") }}</p>
+  {% else %}
+  <p class="empty">{{ t("profile.none") }} <a href="/cv/{{ cv_id }}/text">{{ t("profile.to_analysis") }}</a></p>
+  {% endif %}
+{% elif not groups %}
+<p class="empty">{{ t("profile.no_skills") }}</p>
+{% endif %}
+
+{% if profile %}
+<section id="conditions" aria-labelledby="conditions-title">
+  <h2 id="conditions-title">{{ t("conditions.title") }}</h2>
+  <p class="meta">{{ t("conditions.intro_locked") if locked else t("conditions.intro") }}</p>
+  {% if notice_form %}
+  {{ notice_box(notice, ("busy", "queued", "conditions_saved")) }}
+  {% endif %}
+  {% if locked %}
+  <dl class="facts">
+    {% for f in condition_fields %}
+    <dt>{{ t("conditions." ~ f.name) }}</dt>
+    <dd>
+      {%- if f.value == "" %}{{ t("conditions.unset") }}
+      {%- elif f.kind == "choice" %}{{ t("conditions.answer_yes") if f.value == "1" else t("conditions.answer_no") }}
+      {%- else %}{{ t("conditions.up_to_" ~ f.name, count=f.value) }}{% endif -%}
+    </dd>
+    {% endfor %}
+    <dt>{{ t("conditions.notes") }}</dt>
+    <dd>{{ notes or "–" }}</dd>
+  </dl>
+  {% else %}
+  <form class="conditions-form" method="post" action="/cv/{{ cv_id }}/conditions" data-busy="{{ t("conditions.saving") }}">
+    {% for f in condition_fields %}
+    {% set id = "cond-" ~ f.name %}
+    <div class="field">
+      <label for="{{ id }}">{{ t("conditions." ~ f.name) }}</label>
+      {% if f.kind == "choice" %}
+      <select id="{{ id }}" name="{{ f.name }}" aria-describedby="{{ id }}-hint">
+        <option value=""{% if f.value == "" %} selected{% endif %}>{{ t("conditions.unset") }}</option>
+        <option value="1"{% if f.value == "1" %} selected{% endif %}>{{ t("conditions.answer_yes") }}</option>
+        <option value="0"{% if f.value == "0" %} selected{% endif %}>{{ t("conditions.answer_no") }}</option>
+      </select>
+      {% else %}
+      <input id="{{ id }}" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" name="{{ f.name }}" value="{{ f.value }}"
+        aria-describedby="{{ id }}-hint"{% if f.error %} aria-invalid="true"{% endif %}>
+      {% endif %}
+      <p class="meta" id="{{ id }}-hint">{{ t("conditions." ~ f.name ~ "_hint", default=travel_default) }}</p>
+      {% if f.error %}
+      <p class="msg error" role="alert" id="{{ id }}-error">{{ f.error }}</p>
+      {% endif %}
+    </div>
+    {% endfor %}
+    <div class="field wide">
+      <label for="cond-notes">{{ t("conditions.notes") }}</label>
+      <textarea id="cond-notes" name="notes" rows="3" maxlength="{{ notes_limit }}" aria-describedby="cond-notes-hint"
+        {%- if notes_error %} aria-invalid="true"{% endif %}>{{ notes }}</textarea>
+      <p class="meta" id="cond-notes-hint">{{ t("conditions.notes_hint") }}</p>
+      {% if notes_error %}
+      <p class="msg error" role="alert" id="cond-notes-error">{{ notes_error }}</p>
+      {% endif %}
+    </div>
+    <div class="field wide">
+      <button type="submit">{{ t("conditions.save") }}</button>
+    </div>
+  </form>
+  {% endif %}
+</section>
+{% endif %}
+
+{% if groups %}
+<div class="ai-output" {{ ai_attrs(ai_model) }}>
+{{ ai_note(t) }}
+<p class="meta">{{ t("quotes.verbatim") }}</p>
+{{ stability_box(stability) }}
+{% endif %}
+{% for group in groups %}
+<section>
+  <h2 class="category">{{ t("category." ~ group.category) }}</h2>
+  <ul class="skills">
+    {% for view in group.skills %}
+    {% set s = view.skill %}
+    <li class="skill{% if s.hidden %} is-hidden{% endif %}" id="skill-{{ s.skill_id }}">
+      <div class="skill-head">
+        <strong>{{ view.name }}</strong>
+        <span class="mark">{{ t("level." ~ s.level) }}</span>
+        {% if s.hidden %}<span class="mark muted">{{ t("profile.hidden") }}</span>{% endif %}
+      </div>
+      <p class="meta">
+        {% if view.years %}{{ t("profile.years", count=view.years) }}{% else %}{{ t("profile.years_unknown") }}{% endif %}
+        {% if s.last_used %} · {{ t("profile.last_used", year=s.last_used) }}{% endif %}
+      </p>
+      {% if s.evidence %}
+      <ul class="evidence">
+        {% for ev in s.evidence %}
+        <li>
+          <span class="mark strength-{{ ev.strength }}">{{ t("strength." ~ ev.strength) }}</span>
+          <q>{{ ev.quote }}</q>
+          {% if not ev.verified %}<span class="mark warn">{{ t("profile.unverified") }}</span>{% endif %}
+          <span class="meta">{{ ev.context }}
+            {%- if ev.period_from or ev.period_to %} · {{ ev.period_from or "?" }}–{{ ev.period_to or t("profile.today") }}{% endif %}</span>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="meta">{{ t("profile.no_evidence") }}</p>
+      {% endif %}
+      {% if not locked %}
+      {% set action = "/cv/" ~ cv_id ~ "/skill/" ~ (s.skill_id|urlencode) %}
+      <div class="skill-actions">
+        <form class="inline" method="post" action="{{ action }}" data-busy="{{ t("profile.saving") }}">
+          <label for="level-{{ s.skill_id }}">{{ t("profile.level") }}</label>
+          <select id="level-{{ s.skill_id }}" name="level">
+            {% for level in levels %}
+            <option value="{{ level }}"{% if level == s.level %} selected{% endif %}>{{ t("level." ~ level) }}</option>
+            {% endfor %}
+          </select>
+          <button type="submit" class="secondary">{{ t("profile.save_level") }}</button>
+        </form>
+        <form class="inline" method="post" action="{{ action }}" data-busy="{{ t("profile.saving") }}">
+          <input type="hidden" name="hidden" value="{{ '0' if s.hidden else '1' }}">
+          <button type="submit" class="secondary">{{ t("profile.show") if s.hidden else t("profile.hide") }}</button>
+        </form>
+      </div>
+      {% if notice_skill == s.skill_id %}
+      {{ notice_box(notice, ("busy", "queued")) }}
+      {% endif %}
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endfor %}
+{% if groups %}
+</div>
+{% endif %}
+
+{% include "_cv_delete.html" %}
+{% endblock %}

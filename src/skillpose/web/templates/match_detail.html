@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% from "_macros.html" import coverage, ai_attrs, ai_note, tier_badge %}
+{% block title %}{{ row.title }} – {{ t("nav.matches") }} – {{ t("app.name") }}{% endblock %}
+{% block content %}
+<p><a href="/cv/{{ cv_id }}/matches">{{ t("matches.back") }}</a></p>
+<h1>{{ row.title }}</h1>
+<p class="meta">
+  {{ name }} · {{ row.role }} ·
+  {{ tier_badge(t, row.tier) }} ·
+  {{ t("matches.col_must") }}: <span class="cov">{{ coverage(row.must) }}</span> ·
+  {{ t("matches.col_nice") }}: <span class="cov">{{ coverage(row.nice) }}</span>
+</p>
+{% if row.translated %}
+<p class="hint">{{ t("posting.translated_note") }}</p>
+{% endif %}
+<p><a href="/postings/{{ row.hash }}?cv={{ cv_id }}">{{ t("matches.show_posting") }}</a></p>
+
+{% if not (requirements or unverifiable or conditions) %}
+<section>
+<h2>{{ t("matches.requirements") }}</h2>
+<p class="empty">{{ t("matches.no_requirements") }}</p>
+</section>
+{% else %}
+<section class="ai-output" {{ ai_attrs(ai_model) }}>
+{{ ai_note(t) }}
+<p class="meta">{{ t("quotes.verbatim") }}</p>
+{% if requirements %}
+<div class="block" id="block-requirements">
+<h2>{{ t("matches.requirements") }}</h2>
+<ul class="skills">
+  {% for r in requirements %}
+  <li class="skill" id="{{ r.anchor }}">
+    <div class="skill-head">
+      <strong>{{ r.name }}</strong>
+      <span class="mark">{{ t("matches." ~ r.importance) }}</span>
+      <span class="mark status-{{ r.status }}">{{ t("status." ~ r.status) }}</span>
+    </div>
+    {% if r.gap_type %}
+    <p class="meta">{{ t("matches.gap_type") }}: {{ t("gap." ~ r.gap_type) }}{% if r.weeks %} · {{ t("matches.weeks", count=r.weeks) }}{% endif %}</p>
+    {% endif %}
+    <dl class="req-quotes">
+      <dt>{{ t("matches.cv_quote") }}</dt>
+      <dd>
+        {% if r.evidence %}
+        <q>{{ r.evidence.quote }}</q>
+        {% if not r.evidence.verified %}<span class="mark warn">{{ t("profile.unverified") }}</span>{% endif %}
+        <span class="meta">{{ r.evidence.context }}
+          {%- if r.evidence.period_from or r.evidence.period_to %} · {{ r.evidence.period_from or "?" }}–{{ r.evidence.period_to or t("profile.today") }}{% endif %}</span>
+        {% else %}
+        <span class="meta">{{ t("matches.no_evidence") }}</span>
+        {% endif %}
+      </dd>
+      <dt>{{ t("matches.posting_quote") }}</dt>
+      <dd><q>{{ r.posting_quote }}</q></dd>
+    </dl>
+    <p class="meta">{{ t("matches.reason") }}: {{ r.reason }}</p>
+  </li>
+  {% endfor %}
+</ul>
+</div>
+{% endif %}
+{% if unverifiable %}
+<div class="block" id="block-unverifiable">
+<h2>{{ t("matches.not_verifiable") }}</h2>
+<p class="meta">{{ t("matches.not_verifiable_hint") }}</p>
+<ul class="skills">
+  {% for r in unverifiable %}
+  <li class="skill" id="{{ r.anchor }}">
+    <div class="skill-head">
+      <strong>{{ r.name }}</strong>
+      <span class="mark">{{ t("matches." ~ r.importance) }}</span>
+    </div>
+    <dl class="req-quotes">
+      <dt>{{ t("matches.posting_quote") }}</dt>
+      <dd><q>{{ r.posting_quote }}</q></dd>
+    </dl>
+  </li>
+  {% endfor %}
+</ul>
+</div>
+{% endif %}
+{% if conditions %}
+<div class="block" id="block-conditions">
+<h2>{{ t("matches.conditions") }}</h2>
+<p class="meta">{{ t("matches.conditions_hint") }} <a href="/cv/{{ cv_id }}#conditions">{{ t("matches.change_answers") if has_key else t("matches.see_answers") }}</a></p>
+<ul class="skills">
+  {% for r in conditions %}
+  <li class="skill" id="{{ r.anchor }}">
+    <div class="skill-head">
+      <strong>{{ r.name }}</strong>
+      <span class="mark">{{ t("matches." ~ r.importance) }}</span>
+      <span class="mark status-{{ r.status }}">{{ t("matches.condition_" ~ r.status) if r.status in ("met", "gap", "unanswered") else t("status." ~ r.status) }}</span>
+    </div>
+    {% if r.asks %}
+    <p class="meta">{{ r.asks }}</p>
+    {% endif %}
+    <dl class="req-quotes">
+      <dt>{{ t("matches.posting_quote") }}</dt>
+      <dd><q>{{ r.posting_quote }}</q></dd>
+    </dl>
+    <p class="meta">{{ t("matches.reason") }}: {{ r.reason }}</p>
+  </li>
+  {% endfor %}
+</ul>
+</div>
+{% endif %}
+</section>
+{% endif %}
+{% endblock %}

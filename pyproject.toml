@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "skillpose"
+version = "0.2.0"
+description = "Evidence-based skill extraction, gap analysis and development paths from a CV"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Hans Czylok" }]
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "anthropic>=1.15,<2",   # the stream events and the retry of a started stream were verified with 1.15
+    "httpx2>=2.15",         # imported directly (core/llm.py, cli.py); anthropic needs it too
+    "pydantic>=2",
+    "pyyaml",
+    "pypdf",
+    "python-docx",
+]
+
+[project.optional-dependencies]
+# lower bounds are the versions that were tested when they were set; constraints.txt may be newer
+dev = ["pytest>=9.1", "ruff>=0.17", "httpx2>=2.15"]  # httpx2: what the test client of Starlette 1.x asks for
+# starlette is named because the host check relies on it (parse_host_header); fastapi alone allows starlette>=0.46
+web = ["fastapi>=0.156.8", "starlette>=1.9", "jinja2>=3.1.6", "uvicorn>=0.54", "python-multipart>=0.0.32"]
+
+[project.scripts]
+skillpose = "skillpose.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+skillpose = [
+    "core/defaults.yaml",
+    "core/data/*.yaml",
+    "core/data/prompts_example/*.md",
+    "web/templates/*.html",
+    "web/static/*",
+    "web/i18n/*.yaml",
+    "demo_data/*.json",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["live: calls the real Claude API (costs money, needs ANTHROPIC_API_KEY)"]
+addopts = "-m 'not live'"
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM"]

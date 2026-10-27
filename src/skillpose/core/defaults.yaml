@@ -1,0 +1,86 @@
+# Defaults of skillpose. Override any key with `--settings my.yaml`.
+# Models and efforts were measured with `skillpose eval` (evals/results/2026-10-phase1-job-model.md).
+# Step 2 uses Sonnet 5.5 (a deliberate choice); Haiku 5.5 measured about as well at 1/20 of the price:
+# override with `steps: {job: {model: claude-haiku-5-5}}` for large runs on a small budget.
+
+# max_tokens counts the thinking too. Single calls are streamed, so up to 64000 is allowed; a CV of 9,000 characters
+# used close to 16,000 output tokens (2026-10). Step 2 also goes out in Message Batches: keep its value moderate.
+steps:
+  cv:        {model: claude-opus-5-5, effort: medium, max_tokens: 32000}
+  job:       {model: claude-sonnet-5-5, effort: low, max_tokens: 8000}
+  relation:  {model: claude-haiku-5-5, effort: low, max_tokens: 2000}
+  path:      {model: claude-opus-5-5, effort: medium, max_tokens: 16000}
+
+# What the estimate before an analysis assumes for step 1 (the CV). Its output, thinking included, grows with the CV:
+# out = clamp(cv_out_per_in x input tokens, cv_out_floor, max_tokens of the step). Measured in 2026-10:
+#   CVs of 1,200 to 1,800 characters: 484 to 889 input tokens -> 2,856 to 5,738 output tokens (0.08 to 0.18 USD);
+#   a CV of 9,289 characters: 4,657 input tokens -> 15,694 and 16,000 (the limit then) output tokens (about 0.40 USD).
+# cv_chars_per_token: from these runs (about 2). cv_fixed_tokens: the system blocks, 12,082 tokens in the cache write
+# of the measured runs. The estimate should rather be a bit high than low.
+estimates:
+  cv_chars_per_token: 2.0
+  cv_out_per_in: 4.0
+  cv_out_floor: 6000
+  cv_fixed_tokens: 12000
+
+# How much two analyses of the same CV differ, measured with `skillpose eval --repeat` (README "Stability"; the
+# values come from the JSON lines of its report, source "cv"). The profile page and the market view show them in a
+# note; without this block the note is hidden. Shares from 0 to 1, runs per CV. Measured 2026-10-24 (report
+# evals/results/2026-10-stability.md, 5 runs per CV): level_same = 578 of 620, role_tier_same = 120 of 120. The role
+# tiers were measured when a role needed 5 postings (min_jobs; rules.min_jobs_per_role is 1 now), and the note says so.
+# They were measured with the rules of matches and tiers and the step-2 prompt before 2026-10-25 (rules_before; the
+# degree ranking, soft skills and conditions and the step-2 marking of them came after), and the note says that too
+# until a new measurement replaces the block. A `stability` block in a settings file replaces this one whole: a
+# partial block is refused, it takes nothing from here.
+stability: {level_same: 0.932, role_tier_same: 1.0, runs: 5, min_jobs: 5, rules_before: 2026-10-25}
+
+# US dollars per million tokens (Anthropic API, as of 2026-10). Cache write = 1.25 x input (5-minute TTL).
+# A snapshot of October 2026. Source: https://platform.claude.com/docs/en/about-claude/pricing (Anthropic's pricing
+# page). Nothing updates these prices: when Anthropic changes them, edit this block by hand, or the ledger, the
+# estimates and the monthly limit work with wrong numbers. Cache reads cost 0.05 x input on Opus 5.5 and Sonnet 5.5
+# and 0.1 x input on the other models.
+prices:
+  claude-opus-5-5:   {input: 4.00, output: 20.00, cache_write: 5.00, cache_read: 0.20}
+  claude-sonnet-5-5: {input: 2.00, output: 10.00, cache_write: 2.50, cache_read: 0.10}
+  claude-haiku-5-5:  {input: 0.10, output: 0.50, cache_write: 0.125, cache_read: 0.01}
+  # Fallback models of the server-side fallback (Opus 5.5 -> Opus 5 / Opus 4.8, Sonnet 5.5 -> Sonnet 5): a call that
+  # falls back is billed at the price of the model that answered, so these need a price too.
+  claude-opus-5:     {input: 5.00, output: 25.00, cache_write: 6.25, cache_read: 0.50}
+  claude-opus-4-8:   {input: 5.00, output: 25.00, cache_write: 6.25, cache_read: 0.50}
+  claude-sonnet-5:   {input: 2.00, output: 10.00, cache_write: 2.50, cache_read: 0.20}
+
+rules:
+  stale_years: 8          # a skill unused for longer counts only as partial
+  tier1_coverage: 0.8     # tier 1: at least this share of must requirements covered
+  tier2_max_weeks: 26     # tier 2: all must gaps learnable within this many weeks
+  years_gap_margin: 2.0   # missing more than this many years of required experience is a "years" gap
+  effort_weeks: {weeks: 4, months: 12, certificate: 8}
+  role_tier_share: 0.4    # share of a role family's postings that must reach a tier
+  # Some target roles have very few postings, so the minimum is 1 posting (it was 5). With one or
+  # two postings the role tier is the tier of those postings (two: the better one, at the default role_tier_share),
+  # so read it as a hint: the market view shows the count. Below the minimum a family gets "too little data".
+  min_jobs_per_role: 1
+  conditions_default_travel_share: 10   # per cent of travel that "Reisebereitschaft" without a number asks for
+
+role_families:
+  - test_automation
+  - qa_management
+  - rpa_process_automation
+  - sap_test_consulting
+  - business_analysis
+  - data_analysis_bi
+  - data_engineering
+  - data_science_ml
+  - ai_solutions_engineering
+  - software_development
+  - it_project_management
+  - technical_sales
+  - other
+
+batch_threshold: 20       # from this many open postings, step 2 runs as a Message Batch (half price)
+batch_single_first: 1     # from batch_threshold: the first open postings as single calls, so a result comes at once
+batch_groups: 3           # the rest as this many Message Batches of near-equal size; each is collected when it ends
+relation_workers: 4       # step 3b: at most this many relation checks at the same time (1: one after the other)
+monthly_limit_usd: 5.0
+confirm_above_usd: 0.5    # estimated cost above this needs --yes
+max_posting_chars: 30000  # longer postings are rejected, never truncated

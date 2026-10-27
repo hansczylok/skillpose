@@ -1,0 +1,18 @@
+.venv/
+.env
+.env.*
+!.env.example
+/data/
+# a Markdown export downloaded from the app (it holds content of a CV)
+skillpose-*.md
+skillpose.log*
+__pycache__/
+*.sqlite
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# the briefs, reviews and local settings of the working process hold local paths
+/.superpowers/
+.claude/
+/site/
