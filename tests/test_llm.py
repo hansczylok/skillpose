@@ -105,7 +105,8 @@ def test_the_sdk_streams_each_request_and_the_final_message_is_booked_and_read()
 
     opus, haiku = (json.loads(r.content) for r in sent)
     assert opus["stream"] is True and opus["max_tokens"] == 32000 and opus["fallbacks"] == "default"
-    assert sent[0].headers["anthropic-beta"] == "server-side-fallback-2026-07-01" and "beta=true" in str(sent[0].url)
+    assert sent[0].headers["anthropic-beta"] == "server-side-fallback-2026-07-01" and sent[0].url.path == "/v1/messages"
+    assert {r.headers["anthropic-version"] for r in sent} == {"2026-10-21"}  # the API version of anthropic 2.x
     assert opus["output_config"]["effort"] == "medium" and opus["output_config"]["format"]["type"] == "json_schema"
     assert haiku["stream"] is True and "fallbacks" not in haiku and "anthropic-beta" not in sent[1].headers
     assert (cut.value, cut.error, cut.stop_reason, cut.model) == (None, "max_tokens", "max_tokens", "claude-opus-5-5")

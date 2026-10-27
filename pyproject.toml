@@ -12,7 +12,7 @@ license-files = ["LICENSE"]
 authors = [{ name = "Hans Czylok" }]
 requires-python = ">=3.12,<3.13"
 dependencies = [
-    "anthropic>=1.15,<3",   # the stream events and the retry of a started stream were verified with 1.15
+    "anthropic>=2.3,<3",    # the stream events and the retry of a started stream were verified with 2.3 (API 2026-10-21)
     "httpx2>=2.15",         # imported directly (core/llm.py, cli.py); anthropic needs it too
     "pydantic>=2",
     "pyyaml",

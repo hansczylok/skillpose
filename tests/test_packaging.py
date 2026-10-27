@@ -151,14 +151,14 @@ def test_every_package_the_code_imports_is_declared():
 
 
 def test_the_floors_of_anthropic_and_httpx2_are_tested_versions_that_the_pins_satisfy():
-    # the stream events and the retry of a started stream (core/llm.py) were checked against anthropic 1.15; httpx2
+    # the stream events and the retry of a started stream (core/llm.py) were checked against anthropic 2.3; httpx2
     # is a direct dependency. A floor never lies above its pin (a pin is what the tests ran with).
     project = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))["project"]
     named = {_name(r.name): r for r in map(Requirement, project["dependencies"])}
     floors = {name: [Version(s.version) for s in named[name].specifier if s.operator == ">="]
               for name in ("anthropic", "httpx2")}
-    assert floors["anthropic"] == [Version("1.15")] and len(floors["httpx2"]) == 1
-    assert not named["anthropic"].specifier.contains(Version("1.14.9"))
+    assert floors["anthropic"] == [Version("2.3")] and len(floors["httpx2"]) == 1
+    assert not named["anthropic"].specifier.contains(Version("2.2.9"))
     assert [name for name, [floor] in floors.items() if floor > Version(_pins()[name])] == []
 
 
