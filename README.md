@@ -9,8 +9,8 @@ robotics, a pose is a position plus an orientation.)
 A private, non-commercial learning project. It is not an offer of any kind, and there is no support. It is not
 affiliated with or endorsed by Anthropic.
 
-Try it without an API key: the demo shows three invented persons with finished results and costs nothing
-([Quick start](#quick-start)).
+**[Live demo in the browser](https://hansczylok.github.io/skillpose/)** – three invented persons with finished
+results, no installation, no API key. To run the app yourself, see the [Quick start](#quick-start).
 
 ## What it does
 
@@ -148,7 +148,7 @@ development paths switch between German and English. Only in the demo, each post
 the interface as a translation by Claude (marked as such, the original one click away); quotes from the CVs and the
 postings stay verbatim in their original language. Uploading and analyzing are locked in the demo.
 
-A static copy of the demo needs no installation: it is at `https://hansczylok.github.io/skillpose/`. Build it yourself with `skillpose demo site --out site` (needs
+A static copy of the demo needs no installation: it is at <https://hansczylok.github.io/skillpose/>. Build it yourself with `skillpose demo site --out site` (needs
 `pip install ".[dev,web]"`) and open `site/index.html`.
 
 ### With Docker
