@@ -1,16 +1,19 @@
 # skillpose
 
-<img src="docs/img/logo.svg" alt="skillpose logo: two hands whose index fingers almost touch, with a spark between them" width="240">
+<img src="docs/img/logo.svg" alt="skillpose logo: two hands whose index fingers almost touch, with a spark between them" width="120" align="right">
 
-Your skill pose: where you stand and which way to go. skillpose reads your own CV, finds the skills it can prove
-with quotes from the CV, compares them with job postings that you choose and shows gaps and development paths. (In
-robotics, a pose is a position plus an orientation.)
+**Which jobs can your CV reach – and what is missing?** skillpose reads your own CV, proves every skill with a quote
+from the CV, compares the skills with job postings that you choose and shows gaps, tiers and development paths.
+
+**[▶ Try the live demo](https://hansczylok.github.io/skillpose/)** – three invented persons with finished results,
+no installation, no API key. To run the app yourself, see the [Quick start](#quick-start).
 
 A private, non-commercial learning project. It is not an offer of any kind, and there is no support. It is not
 affiliated with or endorsed by Anthropic.
 
-**[Live demo in the browser](https://hansczylok.github.io/skillpose/)** – three invented persons with finished
-results, no installation, no API key. To run the app yourself, see the [Quick start](#quick-start).
+[![Market view of the demo: a role family with its tier, the median must coverage and the most frequent gaps](docs/img/market.png)](https://hansczylok.github.io/skillpose/)
+
+Your skill pose: where you stand and which way to go. (In robotics, a pose is a position plus an orientation.)
 
 ## What it does
 

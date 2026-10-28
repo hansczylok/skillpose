@@ -318,7 +318,7 @@ def test_readme_shows_the_logo_right_below_the_title():
     lines = (ROOT / "README.md").read_text(encoding="utf-8").splitlines()
     assert lines[0] == "# skillpose"
     assert lines[2] == ('<img src="docs/img/logo.svg" alt="skillpose logo: two hands whose index fingers almost touch, '
-                        'with a spark between them" width="240">')
+                        'with a spark between them" width="120" align="right">')
     # grey hands: GitHub's light or dark theme can differ from the system setting, so the logo has no dark rule
     logo = (ROOT / "docs/img/logo.svg").read_text(encoding="utf-8")
     assert 'role="img"' in logo and "<title" in logo and "#6e7781" in logo and "#EF9F27" in logo
